@@ -1,4 +1,4 @@
-package com.jiyun.ipandatv.base;
+package com.jiyun.ipandatv.adpater;
 
 import android.content.Context;
 import android.view.View;
