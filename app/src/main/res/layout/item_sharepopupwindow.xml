@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    >
+
+
+    <RadioGroup
+        android:clickable="true"
+        android:id="@+id/rg_Froup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/but_Cancel"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingLeft="35dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:clickable="true"
+                android:id="@+id/rbut_fcb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/fcb"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="Facebook"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbut_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/twitter"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="Twitter"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbut_sinawebo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/sinawebo"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="微博"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RadioButton
+                android:id="@+id/rbut_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/wechat"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="微信"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbut_moments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:drawableTop="@mipmap/moments"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="朋友圈"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/but_Cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#eaeaea"
+        android:text="取     消" />
+
+</RelativeLayout>

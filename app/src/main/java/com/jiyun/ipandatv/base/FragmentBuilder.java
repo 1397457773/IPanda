@@ -77,7 +77,7 @@ public class FragmentBuilder {
         //吧当前的fragment对象赋值给了上一个fragmet
         App.mBaseLastFragent = mBaseNowFragment;
         //提交事务
-        mFragmentTransaction.commit();
+        mFragmentTransaction.commitAllowingStateLoss();
         return this;
     }
 

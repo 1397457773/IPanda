@@ -29,6 +29,8 @@ public class Urls {
 
     //熊猫播报 （温）
     public static final String PANDABROADCAST="http://www.ipanda.com/kehuduan/PAGE14503485387528442/index.json";
+
+    public static final String PANDABROADCAST2="http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda";
     //直播中国
     public static final String LIVECHINA=BASEURL+"PAGE14501775094142282/index.json";
     //    熊猫直播 其他 fragment
@@ -56,5 +58,13 @@ public class Urls {
 
     //熊猫播报视频播放
     public static final String VIDEOPLAY="http://115.182.35.91/api/getVideoInfoForCBox.do?pid=";
+
+    public static final String SHANGLAURL = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=5";
+    public static final String SHANGLAURL1 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=6";
+    public static final String SHANGLAURL2 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=7";
+    public static final String SHANGLAURL3 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=8";
+    public static final String SHANGLAURL4 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=9";
+    public static final String SHANGLAURL5 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=10";
+
 
 }
