@@ -61,8 +61,6 @@ public class LookInfoActivity extends BaseActivity {
         img = intent.getStringExtra("img");
         title = intent.getStringExtra("title");
 
-
-
         WebSettings settings = mWebView.getSettings();
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setUseWideViewPort(true);
