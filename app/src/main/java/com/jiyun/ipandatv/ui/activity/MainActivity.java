@@ -1,7 +1,8 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +24,6 @@ import butterknife.OnClick;
 
 import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
-import static com.jiyun.ipandatv.R.id.rg_froup;
 
 public class MainActivity extends BaseActivity {
 
@@ -52,6 +53,17 @@ public class MainActivity extends BaseActivity {
     RadioGroup rgFroup;
     @Bind(R.id.tv_title)
     TextView tvTitle;
+    // 定义一个变量，来标识是否退出
+    private static boolean isExit = false;
+
+    private Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
 
     @Override
     public void initData() {
@@ -132,7 +144,6 @@ public class MainActivity extends BaseActivity {
             case R.id.rbut_Live:
 
                 tvTitle.setText("熊猫直播");
-
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
@@ -145,7 +156,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rbut_China:
 
                 tvTitle.setText("直播中国");
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveChinaFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
@@ -164,6 +175,28 @@ public class MainActivity extends BaseActivity {
             case R.id.iv_person:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
+        }
+    }
+    //对返回键进行监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
         }
     }
 

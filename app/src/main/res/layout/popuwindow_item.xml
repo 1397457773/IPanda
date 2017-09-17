@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#c7175ce7"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_FanHui"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        android:layout_marginRight="19dp"
+        android:layout_marginEnd="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_BianJi"
+        android:layout_alignBottom="@+id/btn_BianJi"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:text="切换栏目"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        android:id="@+id/textView7" />
+
+    <Button
+        android:id="@+id/btn_BianJi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:text="编辑"
+        android:textSize="25sp"
+        android:layout_below="@+id/tv_FanHui"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <com.jiyun.ipandatv.view.MyGridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:verticalSpacing="10dip"
+        android:horizontalSpacing="10dip"
+        android:stretchMode="columnWidth"
+        android:layout_below="@+id/btn_BianJi"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:focusable="false"
+        android:id="@+id/myGridView_Top" />
+
+    <TextView
+        android:id="@+id/tv_TiShi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text="长按拖动可以排序"
+        android:visibility="gone"
+        android:layout_alignBaseline="@+id/textView7"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffff"
+        android:text="点击添加更多栏目"
+        android:layout_below="@+id/myGridView_Top"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <com.jiyun.ipandatv.view.NoScrollGridView
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:verticalSpacing="10dip"
+        android:horizontalSpacing="10dip"
+        android:stretchMode="columnWidth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"
+        android:id="@+id/myGridView_Buttom"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>

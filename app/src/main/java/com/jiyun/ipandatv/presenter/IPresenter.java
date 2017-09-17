@@ -6,7 +6,7 @@ package com.jiyun.ipandatv.presenter;
 
 public interface IPresenter {
     //数据请求成功的处理
-    void getHomeMessage();
+//    void getHomeMessage();
 
 //    void getLoogMessage();
 
@@ -14,7 +14,7 @@ public interface IPresenter {
 
 //    void getLiveMessage();
 
-//    void getChinaMessage();
+    void getChinaMessage();
 
 
 }

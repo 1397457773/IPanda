@@ -69,7 +69,6 @@ public class OkHttpUtils {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String string = response.body().string();
-
                 App.mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
