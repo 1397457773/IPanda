@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:id="@+id/rea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="#0256ff"
+            android:textSize="15dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_img_head"
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/tv_title"
+            />
+
+        <Button
+            android:id="@+id/new_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新生"
+            android:background="#f4efef"
+            android:textSize="20dp"
+            android:textColor="#ff4002"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_img_head"
+            />
+
+        <Button
+            android:id="@+id/instrest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="趣闻"
+            android:background="#f4efef"
+            android:textSize="20dp"
+            android:textColor="#ff4002"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/iv_img_head"
+            android:layout_below="@+id/new_student"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/new_student"
+            android:layout_toEndOf="@+id/new_student" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/instrest"
+            android:layout_toEndOf="@+id/instrest" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
