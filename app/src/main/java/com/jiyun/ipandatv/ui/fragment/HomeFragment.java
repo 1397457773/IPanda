@@ -165,7 +165,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     @Override
     public void error(String string) {
-        Toast.makeText(App.mActivity, string, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

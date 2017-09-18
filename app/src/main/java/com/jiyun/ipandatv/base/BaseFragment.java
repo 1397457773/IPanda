@@ -1,12 +1,15 @@
 package com.jiyun.ipandatv.base;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.lang.reflect.Field;
 
 @SuppressLint("NewApi")
 public abstract class BaseFragment extends Fragment {
@@ -17,7 +20,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(getFragmentLayoutId(),container, false);
+        View view = inflater.inflate(getFragmentLayoutId(), container, false);
         initFragmentView(view);
         updateFragmentTitleBar();
         return view;
@@ -89,4 +92,9 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //你的代码
+        super.onConfigurationChanged(newConfig);
+    }
 }

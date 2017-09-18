@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,6 +15,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".ui.activity.LookInfoActivity" />
+        <activity android:name=".ui.activity.GuideActivity" />
+        <activity android:name=".ui.activity.AnimatorActivity">
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize">
@@ -43,6 +52,11 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
         <activity android:name=".ui.activity.CCTVActivity"></activity>
+        <activity
+            android:name=".ui.activity.Look_VideoActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize"
+            ></activity>
     </application>
 
 </manifest>
