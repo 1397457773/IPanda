@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * Created by 王云飞 on 2017/9/15.
+ * Created by 王云飞 on 2017/9/15.ss
  */
 public class ThirdAdapter2 extends RecyclerView.Adapter<ThirdAdapter2.MyViewHolder> {
     private List<HomeEntiy.DataBean> chinaliveList;
