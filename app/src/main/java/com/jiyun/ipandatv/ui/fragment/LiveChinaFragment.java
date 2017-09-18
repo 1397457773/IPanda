@@ -11,9 +11,6 @@ import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.presenter.HomePresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -70,15 +67,10 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
 
 
-    @Override
-    public void live(ArrayList arrayList, ArrayList arrayList2) {
-
-    }
-
 
 
     @Override
-    public void showDatas(List list, List two, ArrayList book, ArrayList top, ArrayList thing, ArrayList special, ArrayList fresh, ArrayList bear) {
+    public void showDatas() {
 
     }
 
