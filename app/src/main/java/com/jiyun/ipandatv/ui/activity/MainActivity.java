@@ -1,8 +1,7 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.os.Handler;
-import android.os.Message;
-import android.view.KeyEvent;
+import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
-import com.jiyun.ipandatv.ui.fragment.LiveFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,12 +22,13 @@ import butterknife.OnClick;
 
 import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
+import static com.jiyun.ipandatv.R.id.rbut_home;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
-    @Bind(R.id.rbut_home)
+    @Bind(rbut_home)
     RadioButton rbutHome;
     @Bind(R.id.rbut_Look)
     RadioButton rbutLook;
@@ -53,16 +52,6 @@ public class MainActivity extends BaseActivity {
     RadioGroup rgFroup;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-    // 定义一个变量，来标识是否退出
-    private static boolean isExit = false;
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isExit = false;
-        }
-    };
 
     @Override
     public void initData() {
@@ -199,5 +188,20 @@ public class MainActivity extends BaseActivity {
             System.exit(0);
         }
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_hudong:
+                Intent intent = new Intent(MainActivity.this,HuDongActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.iv_person:
+                break;
+        }
+    }
+
+
 
 }

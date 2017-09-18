@@ -1,19 +1,31 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.jiyun.ipandatv.App;
+import com.jiyun.ipandatv.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    // 定义一个变量，来标识是否退出
+    private static boolean isExit = false;
 
+    private Handler mHandler = new Handler() {
 
-
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,5 +61,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        //你的代码
+        super.onConfigurationChanged(newConfig);
+    }
 
 }

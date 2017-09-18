@@ -11,6 +11,8 @@ import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.presenter.HomePresenter;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -71,6 +73,8 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     @Override
     public void showDatas() {
+    @Override
+    public void showDatas(List mBean) {
 
     }
 
