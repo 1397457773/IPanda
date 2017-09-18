@@ -57,4 +57,27 @@ public class Urls {
     //熊猫播报视频播放
     public static final String VIDEOPLAY="http://115.182.35.91/api/getVideoInfoForCBox.do?pid=";
 
+    //熊猫直播
+    public static final String FOURLIVE="http://www.ipanda.com/kehuduan/PAGE14501769230331752/index.json";
+    //精彩一刻
+    public static final String FOUTFUN ="http://api.cntv.cn/video/videolistById?vsid=VSET100167216881&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //超萌滚滚秀
+    public static final String FOUROUT= "http://api.cntv.cn/video/videolistById?vsid=VSET100272959126&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //熊猫档案
+    public static final String FOURBOOK= "http://api.cntv.cn/video/videolistById?vsid=VSET100340574858&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //熊猫Top榜
+    public static final String FOURTOP ="http://api.cntv.cn/video/videolistById?vsid=VSET100284428835&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //熊猫那些事儿
+    public static final String FOURTHING= "http://api.cntv.cn/video/videolistById?vsid=VSET100237714751&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //特别节目
+    public static final String FOURSPECIAL ="http://api.cntv.cn/video/videolistById?vsid=VSET100167308855&n=7&serviceId=panda&o=desc&of=time&p=1";
+
+    //原创新闻
+    public static final String FOURNEW = "http://api.cntv.cn/video/videolistById?vsid=VSET100219009515&n=7&serviceId=panda&o=desc&of=time&p=1";
+
 }
