@@ -28,9 +28,8 @@ public class HomePresenterImp implements HomePresenter.BasePresenter {
     }
 
 
-
     @Override
-    public void getChinaMessage() {
+    public void getHomeMessage() {
         baseView.showProgressDialog();
         iModelImp.getHomeOhhttp(Urls.LIVECHINA, new CallBacks() {
             @Override

@@ -120,7 +120,7 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
     @Override
     protected void initFragmentData() {
         HomePresenterImp homePresenterImp = new HomePresenterImp(this);
-        homePresenterImp.getChinaMessage();
+        homePresenterImp.getHomeMessage();
     }
 
     @Override
@@ -153,76 +153,81 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
             }
         });
 
+        myGridView_Top.setOnChangeListener(new MyGridView.OnChanageListener() {
+            @Override
+            public void onChange(int form, int to) {
+                DaoTopBean daoTopBean = listTitleTop.get(form);
+                if(form < to){
+                    for(int i=form; i<to; i++){
+                        Collections.swap(listTitleTop, i, i+1);
+                    }
+                }else if(form > to){
+                    for(int i=form; i>to; i--){
+                        Collections.swap(listTitleTop, i, i-1);
+                    }
+                }
+
+                listTitleTop.set(to, daoTopBean);
+
+                adapterTop.notifyDataSetChanged();
+            }
+        });
+
+
+
+        myGridView_Buttom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DaoBean daoBean = listTitleBottom.get(position);
+                listTitleTop.add(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
+                daoTop.insert(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
+                adapterTop.notifyDataSetChanged();
+
+
+                dao.delete(listTitleBottom.get(position));
+                listTitleBottom.remove(position);
+
+                adapter_bottom.notifyDataSetChanged();
+
+            }
+        });
+        myGridView_Top.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DaoTopBean daoTopBean = listTitleTop.get(position);
+                if (adapterTop.getCount()>4){
+                    listTitleBottom.add(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
+                    dao.insert(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
+                    adapterTop.notifyDataSetChanged();
+
+
+                    daoTop.delete(listTitleTop.get(position));
+                    listTitleTop.remove(position);
+                    adapterTop.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(getActivity(), "最少为4个标题栏", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        myGridView_Buttom.setEnabled(false);
+        myGridView_Top.setEnabled(false);
         btn_BianJi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 i+=1;
                 switch (i%2){
                     case 0:
+                        tv_TiShi.setVisibility(View.GONE);
                         btn_BianJi.setText("编辑");
-
+                        myGridView_Buttom.setEnabled(false);
+                        myGridView_Top.setEnabled(false);
                         break;
                     case 1:
+                        tv_TiShi.setVisibility(View.VISIBLE);
                         btn_BianJi.setText("完成");
-                        Toast.makeText(getActivity(), "编辑.......", Toast.LENGTH_SHORT).show();
-                        myGridView_Top.setOnChangeListener(new MyGridView.OnChanageListener() {
-                            @Override
-                            public void onChange(int form, int to) {
-                                DaoTopBean daoTopBean = listTitleTop.get(form);
-                                if(form < to){
-                                    for(int i=form; i<to; i++){
-                                        Collections.swap(listTitleTop, i, i+1);
-                                    }
-                                }else if(form > to){
-                                    for(int i=form; i>to; i--){
-                                        Collections.swap(listTitleTop, i, i-1);
-                                    }
-                                }
-
-                                listTitleTop.set(to, daoTopBean);
-
-                                adapterTop.notifyDataSetChanged();
-                            }
-                        });
-
-
-
-                        myGridView_Buttom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                DaoBean daoBean = listTitleBottom.get(position);
-                                listTitleTop.add(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
-                                daoTop.insert(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
-                                adapterTop.notifyDataSetChanged();
-
-
-                                dao.delete(listTitleBottom.get(position));
-                                listTitleBottom.remove(position);
-
-                                adapter_bottom.notifyDataSetChanged();
-
-                            }
-                        });
-                        myGridView_Top.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                DaoTopBean daoTopBean = listTitleTop.get(position);
-                                if (adapterTop.getCount()>4){
-                                    listTitleBottom.add(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
-                                    dao.insert(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
-                                    adapterTop.notifyDataSetChanged();
-
-
-                                    daoTop.delete(listTitleTop.get(position));
-                                    listTitleTop.remove(position);
-                                    adapterTop.notifyDataSetChanged();
-                                }else {
-                                    Toast.makeText(getActivity(), "最少为4个标题栏", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-
+                        myGridView_Top.setEnabled(true);
+                        myGridView_Buttom.setEnabled(true);
                         break;
                 }
             }
