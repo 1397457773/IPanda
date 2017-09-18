@@ -1,5 +1,6 @@
 package com.jiyun.ipandatv.presenter;
 
+import com.jiyun.ipandatv.model.entity.HomeEntiy;
 import com.jiyun.ipandatv.view.IView;
 
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.List;
 
 public interface HomePresenter {
     public interface BaseView <T> extends IView{
-        void showDatas(List<T> mBean);
+        void showDatas(List<HomeEntiy> homeEntiys);
         void error(String string);
+
+
     }
 
     public interface BasePresenter extends IPresenter{

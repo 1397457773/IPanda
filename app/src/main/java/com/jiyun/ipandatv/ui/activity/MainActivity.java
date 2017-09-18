@@ -3,6 +3,10 @@ package com.jiyun.ipandatv.ui.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,6 +21,8 @@ import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
 import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveFragment;
+import com.jiyun.ipandatv.ui.fragment.LookFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,12 +30,13 @@ import butterknife.OnClick;
 
 import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
+import static com.jiyun.ipandatv.R.id.rbut_home;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
-    @Bind(R.id.rbut_home)
+    @Bind(rbut_home)
     RadioButton rbutHome;
     @Bind(R.id.rbut_Look)
     RadioButton rbutLook;
@@ -114,7 +121,7 @@ public class MainActivity extends BaseActivity {
 
                 break;
             case R.id.rbut_Look:
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LookFragment.class).buid();
                 tvTitle.setText("熊猫观察");
 
                 ivHudong.setVisibility(View.GONE);
@@ -144,6 +151,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rbut_Live:
 
                 tvTitle.setText("熊猫直播");
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
