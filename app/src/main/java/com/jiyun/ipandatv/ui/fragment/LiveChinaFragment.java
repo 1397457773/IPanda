@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.BaseFragment;
-import com.jiyun.ipandatv.presenter.HomePresenter;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LiveChinaFragment extends BaseFragment implements HomePresenter.BaseView {
+public class LiveChinaFragment extends BaseFragment {
 
 
     public LiveChinaFragment() {
@@ -56,30 +53,8 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     }
 
-    @Override
-    public void showProgressDialog() {
-
-    }
-
-    @Override
-    public void dismissProgressDialog() {
-
-    }
 
 
 
 
-
-
-    @Override
-    public void showDatas() {
-    @Override
-    public void showDatas(List mBean) {
-
-    }
-
-    @Override
-    public void error(String string) {
-
-    }
 }

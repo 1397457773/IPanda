@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.adpater.LiveshowAdapter;
 import com.jiyun.ipandatv.base.BaseFragment;
-import com.jiyun.ipandatv.model.entity.TalkEnity;
+import com.jiyun.ipandatv.model.entity.talkEnity;
 
 import java.util.ArrayList;
 
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TalkFragment extends BaseFragment {
+public class talkFragment extends BaseFragment {
 
 
 
-    private ArrayList<TalkEnity> talkEnities;
+    private ArrayList<talkEnity> talkEnities;
     private EditText etContent;
     private Button btUp;
     private ListView listview;
@@ -53,7 +53,7 @@ public class TalkFragment extends BaseFragment {
                 if (content.equals("")){
                     Toast.makeText(getActivity(), "输入内容为空", Toast.LENGTH_SHORT).show();
                 }else {
-                    talkEnities.add(new TalkEnity(content));
+                    talkEnities.add(new talkEnity(content));
                     etContent.setText("");
                     liveshowAdapter.notifyDataSetChanged();
                 }

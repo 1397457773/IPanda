@@ -1,9 +1,13 @@
 package com.jiyun.ipandatv.presenter;
 
+import com.google.gson.Gson;
 import com.jiyun.ipandatv.model.HomeModelData;
 import com.jiyun.ipandatv.model.callbacks.CallBacks;
-import com.jiyun.ipandatv.model.utils.OkHttpUtils;
+import com.jiyun.ipandatv.model.entity.HomeEntiy;
 import com.jiyun.ipandatv.model.utils.Urls;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lenovo on 2017/9/13.
@@ -12,7 +16,7 @@ import com.jiyun.ipandatv.model.utils.Urls;
 public class HomePresenterImp implements HomePresenter.BasePresenter {
     private HomePresenter.BaseView baseView;
     private final HomeModelData iModelImp;
-    private Handler handler = new Handler();
+
 
 
     public HomePresenterImp(HomePresenter.BaseView baseView) {

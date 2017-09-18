@@ -25,7 +25,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShowFragment extends BaseFragment implements LivePresenter.BaseView<FunEnity.VideoBean>{
+public class showFragment extends BaseFragment implements LivePresenter.BaseView<FunEnity.VideoBean>{
 
 
     private JCVideoPlayer videocontroller1;
@@ -55,7 +55,7 @@ public class ShowFragment extends BaseFragment implements LivePresenter.BaseView
 
         fragments = new ArrayList<>();
         fragments.add(new LiveshowFragment());
-        fragments.add(new TalkFragment());
+        fragments.add(new talkFragment());
 
         title = new ArrayList<>();
         title.add("多视角直播");

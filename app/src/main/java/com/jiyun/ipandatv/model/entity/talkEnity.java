@@ -3,10 +3,10 @@ package com.jiyun.ipandatv.model.entity;
 /**
  * Created by lenovo on 2017/9/15.
  */
-public class TalkEnity {
+public class talkEnity {
     private String content;
 
-    public TalkEnity(String content) {
+    public talkEnity(String content) {
         this.content = content;
     }
 
@@ -18,7 +18,7 @@ public class TalkEnity {
         this.content = content;
     }
 
-    public TalkEnity() {
+    public talkEnity() {
         super();
     }
 }

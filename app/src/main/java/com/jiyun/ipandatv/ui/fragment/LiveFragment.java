@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.adpater.FragAdapter;
-import com.jiyun.ipandatv.adpater.ThreeAdapter;
+import com.jiyun.ipandatv.adpater.threeAdapter;
 import com.jiyun.ipandatv.adpater.TwoAdapter;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.model.entity.FunEnity;
@@ -50,7 +50,7 @@ public class LiveFragment extends BaseFragment implements LivePresenter.BaseView
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         //加载直播fragment
         fragments = new ArrayList<>();
-        fragments.add(new ShowFragment());
+        fragments.add(new showFragment());
         FragAdapter fragAdapter = new FragAdapter(getActivity().getSupportFragmentManager(), fragments);
         viewPager.setAdapter(fragAdapter);
         //设置首页时listview隐藏
@@ -112,7 +112,7 @@ public class LiveFragment extends BaseFragment implements LivePresenter.BaseView
                 if (tab.getPosition() == 1) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), list);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), list);
                     listView.setAdapter(threeAdapter);
 
                 }
@@ -126,41 +126,41 @@ public class LiveFragment extends BaseFragment implements LivePresenter.BaseView
                 if (tab.getPosition() == 3) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), book);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), book);
                     listView.setAdapter(threeAdapter);
 
                 }
                 if (tab.getPosition() == 4) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), fresh);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), fresh);
                     listView.setAdapter(threeAdapter);
 
                 }
                 if (tab.getPosition() == 5) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), thing);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), thing);
                     listView.setAdapter(threeAdapter);
 
                 }
                 if (tab.getPosition() == 6) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), special);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), special);
                     listView.setAdapter(threeAdapter);
 
                 }
                 if (tab.getPosition() == 7) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), top);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), top);
                     listView.setAdapter(threeAdapter);
                 }
                 if (tab.getPosition() == 8) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    ThreeAdapter threeAdapter = new ThreeAdapter(getActivity(), bear);
+                    threeAdapter threeAdapter = new threeAdapter(getActivity(), bear);
                     listView.setAdapter(threeAdapter);
                 }
             }

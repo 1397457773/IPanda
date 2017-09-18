@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jiyun.ipandatv.R;
-import com.jiyun.ipandatv.model.entity.TalkEnity;
+import com.jiyun.ipandatv.model.entity.talkEnity;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,10 @@ import java.util.ArrayList;
  */
 public class LiveshowAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<TalkEnity> talkEnities;
+    private ArrayList<talkEnity> talkEnities;
     public TextView tv_top;
 
-    public LiveshowAdapter(Context context, ArrayList<TalkEnity> talkEnities) {
+    public LiveshowAdapter(Context context, ArrayList<talkEnity> talkEnities) {
         this.context = context;
         this.talkEnities = talkEnities;
     }

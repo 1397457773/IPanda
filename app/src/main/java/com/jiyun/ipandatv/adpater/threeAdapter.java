@@ -17,10 +17,10 @@ import java.util.List;
 /**
  * Created by lenovo on 2017/9/14.
  */
-public class ThreeAdapter extends BaseAdapter{
+public class threeAdapter extends BaseAdapter{
     private Context context;
 
-    public ThreeAdapter(Context context, List<FunEnity.VideoBean> videoBeen) {
+    public threeAdapter(Context context, List<FunEnity.VideoBean> videoBeen) {
         this.context = context;
         this.videoBeen = videoBeen;
     }

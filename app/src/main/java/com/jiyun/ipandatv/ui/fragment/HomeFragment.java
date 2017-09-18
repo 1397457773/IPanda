@@ -1,16 +1,16 @@
 package com.jiyun.ipandatv.ui.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jiyun.ipandatv.App;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.adpater.HorizRecyAdapter;
 import com.jiyun.ipandatv.adpater.MyRecyAdapter;
@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment implements HomePresenter.BaseView{
+public class HomeFragment extends BaseFragment implements HomePresenter.BaseView<HomeEntiy>{
 
 
     private Banner banner;
@@ -85,6 +85,21 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     }
 
+
+
+
+
+    @Override
+    public void showProgressDialog() {
+
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+
+
+    }
+
     @Override
     public void showDatas(List<HomeEntiy> mBean) {
         for (int i = 0; i < mBean.size(); i++) {
@@ -120,32 +135,32 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(final int position) {
-               if (position==0){
-                   Intent intent = new Intent(getActivity(), DownLoadActivity.class);
-                   startActivity(intent);
+                if (position==0){
+                    Intent intent = new Intent(getActivity(), DownLoadActivity.class);
+                    startActivity(intent);
 
-               }else {
-                   OkHttpUtils.getInstance().sendGET(Urls.VIDEOPLAY + list.get(1).getBigImg().get(position).getPid(), new CallBacks() {
-                       @Override
-                       public void success(String result) {
-                           Gson gson = new Gson();
-                           HomeVideo homeVideo = gson.fromJson(result, HomeVideo.class);
-                           HomeVideo.VideoBean video = homeVideo.getVideo();
-                           List<HomeVideo.VideoBean.ChaptersBean> chapters = video.getChapters();
+                }else {
+                    OkHttpUtils.getInstance().sendGET(Urls.VIDEOPLAY + list.get(1).getBigImg().get(position).getPid(), new CallBacks() {
+                        @Override
+                        public void success(String result) {
+                            Gson gson = new Gson();
+                            HomeVideo homeVideo = gson.fromJson(result, HomeVideo.class);
+                            HomeVideo.VideoBean video = homeVideo.getVideo();
+                            List<HomeVideo.VideoBean.ChaptersBean> chapters = video.getChapters();
 
-                           Intent intent = new Intent(getActivity(), VideoActivity.class);
-                           intent.putExtra("url",chapters.get(0).getUrl());
-                           intent.putExtra("title",list.get(1).getBigImg().get(position ).getTitle());
-                           startActivity(intent);
-                       }
+                            Intent intent = new Intent(getActivity(), VideoActivity.class);
+                            intent.putExtra("url",chapters.get(0).getUrl());
+                            intent.putExtra("title",list.get(1).getBigImg().get(position ).getTitle());
+                            startActivity(intent);
+                        }
 
-                       @Override
-                       public void failure(String result) {
+                        @Override
+                        public void failure(String result) {
 
-                       }
-                   });
+                        }
+                    });
 
-               }
+                }
             }
         });
         banner.start();
@@ -154,8 +169,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
             list.add(data);
         }
 
-         myRecyAdapter.notifyDataSetChanged();
-
+        myRecyAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -163,16 +177,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     }
 
-    @Override
-    public void showProgressDialog() {
-
-    }
-
-    @Override
-    public void dismissProgressDialog() {
-
-
-    }
     public class GlideImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {

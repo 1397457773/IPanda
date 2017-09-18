@@ -1,7 +1,9 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveFragment;
+import com.jiyun.ipandatv.ui.fragment.LookFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,6 +56,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     RadioGroup rgFroup;
     @Bind(R.id.tv_title)
     TextView tvTitle;
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+    private boolean isExit=false;
 
     @Override
     public void initData() {
@@ -102,7 +113,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
             case R.id.rbut_Look:
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LookFragment.class).buid();
                 tvTitle.setText("熊猫观察");
 
                 ivHudong.setVisibility(View.GONE);
@@ -159,6 +170,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_hudong:
+                startActivity(new Intent(MainActivity.this,HuDongActivity.class));
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_person:
