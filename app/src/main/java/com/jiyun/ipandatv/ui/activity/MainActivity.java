@@ -1,8 +1,5 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.os.Handler;
-import android.os.Message;
-import android.view.KeyEvent;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +29,7 @@ import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
 import static com.jiyun.ipandatv.R.id.rbut_home;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity  {
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
@@ -178,7 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_hudong:
-                Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,HuDongActivity.class));
                 break;
             case R.id.iv_person:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();

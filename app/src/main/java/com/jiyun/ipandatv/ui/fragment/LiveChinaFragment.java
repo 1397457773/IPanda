@@ -4,12 +4,25 @@ package com.jiyun.ipandatv.ui.fragment;
 import android.app.ProgressDialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jiyun.ipandatv.R;
+import com.jiyun.ipandatv.adpater.LiveChinaListAdapter;
+import com.jiyun.ipandatv.adpater.LiveChinaMyGridAdapter;
+import com.jiyun.ipandatv.adpater.LiveChinaTopMyGridAdapter;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.model.dao.DaoBeanDao;
 import com.jiyun.ipandatv.model.dao.DaoTopBeanDao;
@@ -19,8 +32,8 @@ import com.jiyun.ipandatv.model.entity.DaoBean;
 import com.jiyun.ipandatv.model.entity.DaoTopBean;
 import com.jiyun.ipandatv.model.entity.LiveChinaEntiy;
 import com.jiyun.ipandatv.model.entity.LiveChinaScene;
-import com.jiyun.ipandatv.presenter.HomePresenter;
-import com.jiyun.ipandatv.presenter.HomePresenterImp;
+import com.jiyun.ipandatv.presenter.LiveChinaPresenter;
+import com.jiyun.ipandatv.presenter.LiveChinaPresenterImp;
 import com.jiyun.ipandatv.view.MyGridView;
 import com.jiyun.ipandatv.view.NoScrollGridView;
 
@@ -40,10 +53,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class LiveChinaFragment extends BaseFragment implements HomePresenter.BaseView<LiveChinaEntiy> {
+
+public class LiveChinaFragment extends BaseFragment implements LiveChinaPresenter.BaseView<LiveChinaEntiy> {
 
 
     @Bind(R.id.tb_LiveChina)
@@ -105,8 +116,8 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     @Override
     protected void initFragmentData() {
-        HomePresenterImp homePresenterImp = new HomePresenterImp(this);
-        homePresenterImp.getHomeMessage();
+        LiveChinaPresenterImp liveChinaPresenterImp = new LiveChinaPresenterImp(this);
+        liveChinaPresenterImp.getHomeMessage();
     }
 
     @Override
@@ -238,32 +249,6 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 //        progressDialog.dismiss();
     }
 
-    @Override
-    public void showDatas(List<LiveChinaEntiy> mBean) {
-        alllist = mBean.get(0).getAlllist();
-        dao = GreenDaoUtils.getInstance(getContext()).getDao();
-
-        for (int i = 0; i < alllist.size(); i++) {
-            dao.insertOrReplace(new DaoBean((long) i,alllist.get(i).getOrder(),alllist.get(i).getTitle(),alllist.get(i).getType() ,alllist.get(i).getUrl()));
-        }
-
-
-        final List<LiveChinaEntiy.TablistBean> tablist = mBean.get(0).getTablist();
-        daoTop = DaoTopUtils.getInstance(getContext()).getDao();
-        for (int i = 0; i < tablist.size(); i++) {
-            daoTop.insertOrReplace(new DaoTopBean((long) i,tablist.get(i).getOrder(),tablist.get(i).getTitle(),tablist.get(i).getType(),tablist.get(i).getUrl()));
-        }
-
-        List<DaoTopBean> listTop = daoTop.queryBuilder().list();
-        for (int i = 0; i <listTop.size() ; i++) {
-            DaoTopBean daoTopBean = listTop.get(i);
-            dao.queryBuilder().where(DaoBeanDao.Properties.Title.eq(daoTopBean.getTitle())).buildDelete().executeDeleteWithoutDetachingEntities();
-        }
-        initTabData();
-
-        initGridData();
-
-    }
 
     private void initTabData() {
         final List<DaoTopBean> listDao = daoTop.queryBuilder().list();
@@ -507,6 +492,33 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
     }
 
     @Override
+    public void showDatas(List<LiveChinaEntiy> mBean) {
+        alllist = mBean.get(0).getAlllist();
+        dao = GreenDaoUtils.getInstance(getContext()).getDao();
+
+        for (int i = 0; i < alllist.size(); i++) {
+            dao.insertOrReplace(new DaoBean((long) i,alllist.get(i).getOrder(),alllist.get(i).getTitle(),alllist.get(i).getType() ,alllist.get(i).getUrl()));
+        }
+
+
+        final List<LiveChinaEntiy.TablistBean> tablist = mBean.get(0).getTablist();
+        daoTop = DaoTopUtils.getInstance(getContext()).getDao();
+        for (int i = 0; i < tablist.size(); i++) {
+            daoTop.insertOrReplace(new DaoTopBean((long) i,tablist.get(i).getOrder(),tablist.get(i).getTitle(),tablist.get(i).getType(),tablist.get(i).getUrl()));
+        }
+
+        List<DaoTopBean> listTop = daoTop.queryBuilder().list();
+        for (int i = 0; i <listTop.size() ; i++) {
+            DaoTopBean daoTopBean = listTop.get(i);
+            dao.queryBuilder().where(DaoBeanDao.Properties.Title.eq(daoTopBean.getTitle())).buildDelete().executeDeleteWithoutDetachingEntities();
+        }
+        initTabData();
+
+        initGridData();
+
+    }
+
+    @Override
     public void error(String string) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -522,11 +534,5 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
+
 }

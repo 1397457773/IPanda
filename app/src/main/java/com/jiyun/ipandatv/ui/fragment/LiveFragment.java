@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.adpater.FragAdapter;
 import com.jiyun.ipandatv.adpater.threeAdapter;
-import com.jiyun.ipandatv.adpater.TwoAdapter;
+import com.jiyun.ipandatv.adpater.twoAdapter;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.model.entity.FunEnity;
 import com.jiyun.ipandatv.model.entity.LiveEnity;
@@ -119,7 +119,7 @@ public class LiveFragment extends BaseFragment implements LivePresenter.BaseView
                 if (tab.getPosition() == 2) {
                     listView.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.INVISIBLE);
-                    TwoAdapter twoAdapter = new TwoAdapter(getActivity(), two);
+                    twoAdapter twoAdapter = new twoAdapter(getActivity(), two);
                     listView.setAdapter(twoAdapter);
 
                 }

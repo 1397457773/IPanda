@@ -8,9 +8,11 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.jiyun.ipandatv.model.db.BigImgBeanDao;
 import com.jiyun.ipandatv.model.entity.DaoBean;
 import com.jiyun.ipandatv.model.entity.DaoTopBean;
 
+import com.jiyun.ipandatv.model.dao.BigImgBeanDaoDao;
 import com.jiyun.ipandatv.model.dao.DaoBeanDao;
 import com.jiyun.ipandatv.model.dao.DaoTopBeanDao;
 
@@ -23,9 +25,11 @@ import com.jiyun.ipandatv.model.dao.DaoTopBeanDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig bigImgBeanDaoDaoConfig;
     private final DaoConfig daoBeanDaoConfig;
     private final DaoConfig daoTopBeanDaoConfig;
 
+    private final BigImgBeanDaoDao bigImgBeanDaoDao;
     private final DaoBeanDao daoBeanDao;
     private final DaoTopBeanDao daoTopBeanDao;
 
@@ -33,22 +37,32 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
+        bigImgBeanDaoDaoConfig = daoConfigMap.get(BigImgBeanDaoDao.class).clone();
+        bigImgBeanDaoDaoConfig.initIdentityScope(type);
+
         daoBeanDaoConfig = daoConfigMap.get(DaoBeanDao.class).clone();
         daoBeanDaoConfig.initIdentityScope(type);
 
         daoTopBeanDaoConfig = daoConfigMap.get(DaoTopBeanDao.class).clone();
         daoTopBeanDaoConfig.initIdentityScope(type);
 
+        bigImgBeanDaoDao = new BigImgBeanDaoDao(bigImgBeanDaoDaoConfig, this);
         daoBeanDao = new DaoBeanDao(daoBeanDaoConfig, this);
         daoTopBeanDao = new DaoTopBeanDao(daoTopBeanDaoConfig, this);
 
+        registerDao(BigImgBeanDao.class, bigImgBeanDaoDao);
         registerDao(DaoBean.class, daoBeanDao);
         registerDao(DaoTopBean.class, daoTopBeanDao);
     }
     
     public void clear() {
+        bigImgBeanDaoDaoConfig.clearIdentityScope();
         daoBeanDaoConfig.clearIdentityScope();
         daoTopBeanDaoConfig.clearIdentityScope();
+    }
+
+    public BigImgBeanDaoDao getBigImgBeanDaoDao() {
+        return bigImgBeanDaoDao;
     }
 
     public DaoBeanDao getDaoBeanDao() {
