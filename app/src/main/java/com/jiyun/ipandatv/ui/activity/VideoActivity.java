@@ -24,6 +24,8 @@ public class VideoActivity extends BaseActivity {
         String title = intent.getStringExtra("title");
         String url = intent.getStringExtra("url");
         videocontroller1.setUp(url,title);
+        videocontroller1.ivStart.setClickable(false);
+        videocontroller1.ivStart.performClick();
     }
 
     @Override

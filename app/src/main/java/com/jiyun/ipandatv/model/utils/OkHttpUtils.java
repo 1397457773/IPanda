@@ -32,7 +32,7 @@ public class OkHttpUtils {
                 Response pragma = proceed.newBuilder()
                         .removeHeader("Pragma")
                         .removeHeader("Cache-Control")
-                        .addHeader("Cache-Control", "max-age=" + 1000 * 30)
+                        .addHeader("Cache-Control", "max-age=" + 1024 * 1024*500)
                         .build();
                 return pragma;
             }

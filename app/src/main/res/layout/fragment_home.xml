@@ -4,9 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.jiyun.ipandatv.ui.fragment.HomeFragment">
-
+    <com.jwenfeng.library.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/pull_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.kevin.wraprecyclerview.WrapRecyclerView
     android:id="@+id/wrv_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></com.kevin.wraprecyclerview.WrapRecyclerView>
+    </com.jwenfeng.library.pulltorefresh.PullToRefreshLayout>
 </LinearLayout>

@@ -66,5 +66,51 @@ public class Urls {
     public static final String SHANGLAURL4 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=9";
     public static final String SHANGLAURL5 = "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1449807494852603,PAGE1451473625420136,PAGE1449807502866458,PAGE1451473627439140,PAGE1451473547108278,PAGE1451473628934144&serviceId=panda&pageSize=6&page=10";
 
+    //国宝档案 高清完整
+    public static final String NEH1="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=1&serviceId=panda&em=1";
+    public static final String NEH2="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=2&serviceId=panda&em=1";
+    public static final String NEH3="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=3&serviceId=panda&em=1";
+    public static final String NEH4="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=4&serviceId=panda&em=1";
 
+    //国宝档案 精彩看点
+    public static final String N1="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=1&serviceId=panda&em=2";
+    public static final String N2="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=2&serviceId=panda&em=2";
+    public static final String N3="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=3&serviceId=panda&em=2";
+    public static final String N4="http://api.cntv.cn/video/videolistById?n=6&vsid=C14121&p=4&serviceId=panda&em=2";
+
+    //走遍中国  高清完整
+    public static final String CHINA1="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=1&serviceId=panda&em=1";
+    public static final String CHINA2="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=2&serviceId=panda&em=1";
+    public static final String CHINA3="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=3&serviceId=panda&em=1";
+    public static final String CHINA4="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=4&serviceId=panda&em=1";
+
+    //走遍中国 精彩看点
+    public static final String C1="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=1&serviceId=panda&em=2";
+    public static final String C2="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=2&serviceId=panda&em=2";
+    public static final String C3="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=3&serviceId=panda&em=2";
+    public static final String C4="http://api.cntv.cn/video/videolistById?n=6&vsid=C10352&p=4&serviceId=panda&em=2";
+
+    //华人世界 高清完整
+    public static final String HPER1="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=1&serviceId=panda&em=1";
+    public static final String HPER2="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=2&serviceId=panda&em=1";
+    public static final String HPER3="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=3&serviceId=panda&em=1";
+    public static final String HPER4="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=4&serviceId=panda&em=1";
+
+    //华人世界 精彩看点
+    public static final String H1="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=1&serviceId=panda&em=2";
+    public static final String H2="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=2&serviceId=panda&em=2";
+    public static final String H3="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=3&serviceId=panda&em=2";
+    public static final String H4="http://api.cntv.cn/video/videolistById?n=6&vsid=C17604&p=4&serviceId=panda&em=2";
+
+    //中国文艺
+    public static final String ZW1="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=1&serviceId=panda&em=1";
+    public static final String ZW2="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=2&serviceId=panda&em=1";
+    public static final String ZW3="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=3&serviceId=panda&em=1";
+    public static final String ZW4="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=4&serviceId=panda&em=1";
+
+    //中国文艺 精彩看点
+    public static final String Z1="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=1&serviceId=panda&em=2";
+    public static final String Z2="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=2&serviceId=panda&em=2";
+    public static final String Z3="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=3&serviceId=panda&em=2";
+    public static final String Z4="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=4&serviceId=panda&em=2";
 }

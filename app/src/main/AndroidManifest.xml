@@ -4,8 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
@@ -17,17 +15,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:configChanges="orientation|screenSize"></activity>
-        <activity android:name=".ui.activity.LookInfoActivity" />
-        <activity android:name=".ui.activity.GuideActivity" />
-        <activity android:name=".ui.activity.AnimatorActivity">
+            android:configChanges="orientation|screenSize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.activity.DownLoadActivity" />
         <activity android:name=".ui.activity.WebActivity" />
         <activity
@@ -50,11 +45,6 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
         <activity android:name=".ui.activity.CCTVActivity"></activity>
-        <activity
-            android:name=".ui.activity.Look_VideoActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|screenSize"
-            ></activity>
     </application>
 
 </manifest>

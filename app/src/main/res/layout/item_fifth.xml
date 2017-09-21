@@ -15,6 +15,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:src="@drawable/lpanda_bottom_gra"
+        android:layout_marginBottom="16dp"
         android:layout_alignBottom="@+id/iv_cctv"
         />
     <ImageView
@@ -31,7 +32,6 @@
         android:id="@+id/tv_jieshao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="哈哈哈"
         android:textSize="15dp"
         android:layout_below="@+id/iv_img_icon"
         android:layout_marginTop="10dp"

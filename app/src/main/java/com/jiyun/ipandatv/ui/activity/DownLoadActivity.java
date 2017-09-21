@@ -2,6 +2,7 @@ package com.jiyun.ipandatv.ui.activity;
 
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
@@ -38,6 +39,8 @@ public class DownLoadActivity extends BaseActivity implements View.OnClickListen
     public void initView() {
         ButterKnife.bind(this);
         webView.loadUrl("http://download.cntv.cn/app/ipanda/index.html");
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
 
     }
 

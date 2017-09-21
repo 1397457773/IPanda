@@ -2,22 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
+    android:background="#ffffff"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
     >
    <TextView
+       android:padding="5dp"
        android:id="@+id/tv_panda_live"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:textColor="#0256ff"
-       android:textSize="15dp"
+       android:textSize="16dp"
        android:layout_marginLeft="15dp"
        />
-
+   <View
+       android:layout_marginTop="20dp"
+       android:layout_below="@+id/tv_panda_live"
+       android:layout_width="wrap_content"
+       android:layout_height="1dp"
+       android:id="@+id/myView"
+       android:background="#e2e2e2" />
    <android.support.v7.widget.RecyclerView
        android:id="@+id/rcy_cler"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/tv_panda_live"
+       android:layout_below="@+id/myView"
        android:layout_marginTop="15dp"
        android:layout_marginLeft="15dp"
        >

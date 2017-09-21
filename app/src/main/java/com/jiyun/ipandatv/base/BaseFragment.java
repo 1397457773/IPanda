@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Field;
-
 @SuppressLint("NewApi")
 public abstract class BaseFragment extends Fragment {
 

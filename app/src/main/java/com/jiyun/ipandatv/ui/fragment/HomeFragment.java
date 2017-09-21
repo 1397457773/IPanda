@@ -1,6 +1,7 @@
 package com.jiyun.ipandatv.ui.fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jiyun.ipandatv.App;
 import com.jiyun.ipandatv.R;
-import com.jiyun.ipandatv.adpater.HorizRecyAdapter;
 import com.jiyun.ipandatv.adpater.MyRecyAdapter;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.model.callbacks.CallBacks;
@@ -26,6 +24,8 @@ import com.jiyun.ipandatv.presenter.HomePresenter;
 import com.jiyun.ipandatv.presenter.HomePresenterImp;
 import com.jiyun.ipandatv.ui.activity.DownLoadActivity;
 import com.jiyun.ipandatv.ui.activity.VideoActivity;
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 import com.kevin.wraprecyclerview.WrapRecyclerView;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -48,8 +48,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
     private List<String> tList;
     private HomeEntiy.DataBean data;
     private List<HomeEntiy.DataBean> list = new ArrayList<>();
-    private HorizRecyAdapter horizRecyAdapter;
     private MyRecyAdapter myRecyAdapter;
+    private ProgressDialog progressDialog;
+    private PullToRefreshLayout pull_refresh;
 
     @Override
     protected int getFragmentLayoutId() {
@@ -58,6 +59,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     @Override
     protected void initFragmentView(View view) {
+        pull_refresh = (PullToRefreshLayout)view.findViewById(R.id.pull_refresh);
         wrv_view =(WrapRecyclerView) view.findViewById(R.id.wrv_view);
         View inflate = LayoutInflater.from(getContext()).inflate(R.layout.item_banner_head, null);
         banner =(Banner) inflate.findViewById(R.id.banner);
@@ -68,8 +70,25 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
         wrv_view.setLayoutManager(manager);
         myRecyAdapter = new MyRecyAdapter(list, getContext());
         wrv_view.setAdapter(myRecyAdapter);
-        HomePresenterImp homePresenterImp = new HomePresenterImp(this);
+
+        final HomePresenterImp homePresenterImp = new HomePresenterImp(this);
         homePresenterImp.getHomeMessage();
+        pull_refresh.setRefreshListener(new BaseRefreshListener() {
+            @Override
+            public void refresh() {
+                homePresenterImp.getHomeMessage();
+                myRecyAdapter.notifyDataSetChanged();
+                pull_refresh.finishRefresh();
+            }
+
+            @Override
+            public void loadMore() {
+                pull_refresh.finishLoadMore();
+            }
+        });
+
+
+
     }
 
 
@@ -170,12 +189,14 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     @Override
     public void showProgressDialog() {
+        progressDialog = new ProgressDialog(getActivity());
+                 progressDialog.show();
 
     }
 
     @Override
     public void dismissProgressDialog() {
-
+         progressDialog.dismiss();
 
     }
     public class GlideImageLoader extends ImageLoader {

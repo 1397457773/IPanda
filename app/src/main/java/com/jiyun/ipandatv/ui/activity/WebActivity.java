@@ -1,5 +1,6 @@
 package com.jiyun.ipandatv.ui.activity;
 
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.jiyun.ipandatv.R;
@@ -16,6 +17,8 @@ public class WebActivity extends BaseActivity {
     @Override
     public void initData() {
         webView.loadUrl("https://itunes.apple.com/cn/app/xiong-mao-pin-dao/id1071208653?mt=8");
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
     }
 
     @Override

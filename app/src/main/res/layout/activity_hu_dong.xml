@@ -3,32 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cec9c9"
+    android:background="#e2e2e2"
     tools:context="com.jiyun.ipandatv.ui.activity.HuDongActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/too_bar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#0256ff"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/iv_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_chevron_left_white_36dp"
-            />
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="原创·互动"
-            android:textSize="25dp"
-            android:layout_centerInParent="true"
-            android:textColor="#f7f3f3"
-            />
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_left_white_36dp"
+                />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="原创·互动"
+                android:textSize="25dp"
+                android:layout_centerInParent="true"
+                android:textColor="#f7f3f3"
+                />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
     <com.kevin.wraprecyclerview.WrapRecyclerView

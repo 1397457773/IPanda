@@ -5,35 +5,35 @@
     android:layout_height="match_parent"
     tools:context="com.jiyun.ipandatv.ui.activity.DownLoadActivity">
     <android.support.v7.widget.Toolbar
-    android:id="@+id/too_bar"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="#0294ff"
-    >
+        android:id="@+id/too_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#0294ff"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <ImageView
-    android:id="@+id/iv_img"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/ic_chevron_left_white_36dp"
-    />
-    <ImageView
-    android:id="@+id/iv_img_share"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:src="@drawable/share"
-    android:layout_alignParentRight="true"
-    />
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_left_white_36dp"
+                />
+            <ImageView
+                android:id="@+id/iv_img_share"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/share"
+                android:layout_alignParentRight="true"
+                />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <WebView
-    android:id="@+id/web_View"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/too_bar"
+        android:id="@+id/web_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/too_bar"
         ></WebView>
 
 

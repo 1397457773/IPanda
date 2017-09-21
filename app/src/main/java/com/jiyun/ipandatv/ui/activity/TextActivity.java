@@ -29,6 +29,8 @@ public class TextActivity extends BaseActivity {
         String title2 = intent.getStringExtra("title");
         videocontroller1.setUp(url,title);
         videocontroller1.setUp(url1,title2);
+        videocontroller1.ivStart.setClickable(false);
+        videocontroller1.ivStart.performClick();
     }
 
     @Override

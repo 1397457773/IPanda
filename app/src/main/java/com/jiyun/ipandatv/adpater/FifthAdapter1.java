@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.model.entity.HomeCCtv;
+import com.jiyun.ipandatv.model.utils.Urls;
 import com.jiyun.ipandatv.ui.activity.CCTVActivity;
 import com.squareup.picasso.Picasso;
 
@@ -36,13 +38,29 @@ public class FifthAdapter1 extends RecyclerView.Adapter<FifthAdapter1.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Picasso.with(context.getApplicationContext()).load(ccList.get(position).getImage()).into(holder.iv_cctv);
         holder.tv_jieshao.setText(ccList.get(position).getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,CCTVActivity.class);
+                if (position==0){
+                    intent.putExtra("url", Urls.NEH1);
+                    intent.putExtra("url1",Urls.N1);
+                }else if (position==1){
+                    intent.putExtra("url", Urls.CHINA1);
+                    intent.putExtra("url1",Urls.C1);
+                }else if (position==2){
+                    intent.putExtra("url",Urls.HPER1);
+                    intent.putExtra("url1",Urls.H1);
+                }else if (position==3){
+                    intent.putExtra("url",Urls.ZW1);
+                    intent.putExtra("url1",Urls.Z1);
+                }else {
+                    Toast.makeText(context, "我去开小差了", Toast.LENGTH_SHORT).show();
+                }
+                intent.putExtra("title",ccList.get(position).getTitle());
                 context.startActivity(intent);
 
             }
