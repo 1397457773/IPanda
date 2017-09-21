@@ -1,25 +1,35 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.dao.BigImgBeanDaoDao;
+import com.jiyun.ipandatv.model.callbacks.CallBacks;
 import com.jiyun.ipandatv.model.db.BigImgBeanDao;
+import com.jiyun.ipandatv.model.entity.PDBCInfotwoBean;
 import com.jiyun.ipandatv.model.utils.ImgsDao_Utils;
+import com.jiyun.ipandatv.model.utils.OkHttpUtils;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,16 +41,21 @@ public class LookInfoActivity extends BaseActivity {
 
     @Bind(R.id.iv_back)
     ImageView ivBack;
-    @Bind(R.id.mWebView)
-    WebView mWebView;
     @Bind(iv_collect)
     ImageView ivCollect;
     @Bind(R.id.iv_share)
     ImageView ivShare;
+    @Bind(R.id.textView_title)
+    TextView textViewTitle;
+    @Bind(R.id.textView_time)
+    TextView textViewTime;
+    @Bind(R.id.textView_info)
+    TextView textViewInfo;
     private long l;
     private BigImgBeanDaoDao dao;
     private String img;
     private String title;
+    private String id;
 
     public View rootView;
     public RadioButton rbut_fcb;
@@ -51,50 +66,83 @@ public class LookInfoActivity extends BaseActivity {
     public RadioGroup rg_Froup;
     public Button but_Cancel;
     private PopupWindow popupWindow;
+    private Handler handler;
 
 
     @Override
     public void initData() {
         Intent intent = getIntent();
 
-        String url = intent.getStringExtra("url");
-        img = intent.getStringExtra("img");
-        title = intent.getStringExtra("title");
+        id = intent.getStringExtra("id");
 
-        WebSettings settings = mWebView.getSettings();
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
-        //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
-        settings.setJavaScriptEnabled(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        // 设置可以被显示的屏幕控制
-        settings.setDisplayZoomControls(true);
-        // 设置缓存
-        settings.setAppCacheEnabled(true);
-        // 设置缓存模式,一共有四种模式
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        //缩放操作
-        settings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
-        settings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
-        settings.setDisplayZoomControls(false); //隐藏原生的缩放控件
-
-        mWebView.loadUrl(url);
-
-        mWebView.setWebViewClient(new WebViewClient() {
+        OkHttpUtils.getInstance().sendGET("http://api.cntv.cn/article/contentinfo?id=" + id + "&serviceId=panda", new CallBacks() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return super.shouldOverrideUrlLoading(view, url);
+            public void success(String result) {
+                Gson gson = new Gson();
+                PDBCInfotwoBean pdbcInfotwoBean = gson.fromJson(result, PDBCInfotwoBean.class);
+                String titleString = pdbcInfotwoBean.getTitle();
+                String pubtime = pdbcInfotwoBean.getPubtime();
+
+                textViewTitle.setText(titleString);
+                textViewTime.setText(pubtime);
+
+                final String content = pdbcInfotwoBean.getContent();
+                textViewInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+                handler = new Handler(){
+                    @Override
+                    public void handleMessage(Message msg) {
+                        super.handleMessage(msg);
+                        if (msg.what == 0 * 101) {
+                            textViewInfo.setText((CharSequence) msg.obj);
+                        }
+                    }
+                };
+
+                Thread thread = new Thread(new Runnable() {
+                    Message message  = new Message();
+                    @Override
+                    public void run() {
+                        Html.ImageGetter imageGetter = new Html.ImageGetter() {
+                            @Override
+                            public Drawable getDrawable(String source) {
+                                URL url;
+                                Drawable drawable = null;
+
+                                try {
+                                    url = new URL(source);
+                                    drawable = Drawable.createFromStream(url.openStream(),null);
+                                    drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                return drawable;
+                            }
+                        };
+
+                        CharSequence spanned = Html.fromHtml(content, imageGetter, null);
+                        message.what = 0 * 101;
+                        message.obj = spanned;
+
+                        handler.sendMessage(message);
+                    }
+                });
+
+                thread.start();
+            }
+
+            @Override
+            public void failure(String result) {
+
             }
         });
+
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mWebView.onPause();
-    }
 
     @Override
     public void initListener() {
@@ -119,7 +167,7 @@ public class LookInfoActivity extends BaseActivity {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.iv_collect:
+            case iv_collect:
                 l++;
                 Toast toast = new Toast(this);
 
@@ -146,10 +194,10 @@ public class LookInfoActivity extends BaseActivity {
                 View popupView = View.inflate(this, R.layout.item_sharepopupwindow, null);
                 popupViewId(popupView);
 
-                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, (int) (600*1.6),true);
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, (int) (600 * 1.6), true);
                 popupWindow.setBackgroundDrawable(new BitmapDrawable());
                 popupWindow.setAnimationStyle(R.anim.share_alph_style);
-                popupWindow.showAtLocation(ivShare, Gravity.BOTTOM,0,0);
+                popupWindow.showAtLocation(ivShare, Gravity.BOTTOM, 0, 0);
 
                 popupListener();
                 break;
@@ -160,7 +208,7 @@ public class LookInfoActivity extends BaseActivity {
         rg_Froup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rbut_fcb:
                         Toast.makeText(LookInfoActivity.this, "0", Toast.LENGTH_SHORT).show();
                         break;
@@ -191,10 +239,9 @@ public class LookInfoActivity extends BaseActivity {
         this.rbut_wechat = (RadioButton) rootView.findViewById(R.id.rbut_wechat);
         this.rbut_moments = (RadioButton) rootView.findViewById(R.id.rbut_moments);
         this.rg_Froup = (RadioGroup) rootView.findViewById(R.id.rg_Froup);
-        this.but_Cancel = (Button) rootView.findViewById(R.id.but_Cancel);
+        this.but_Cancel = (Button) rootView.findViewById(R.id.popu_cancel);
 
 
     }
-
 
 }

@@ -6,9 +6,11 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jiyun.ipandatv.R;
@@ -25,12 +27,11 @@ import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
-import static com.jiyun.ipandatv.R.id.mWebView;
-
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class Look_VideoActivity extends BaseActivity {
 
-    private JCVideoPlayer jzVideoPlayerStandard;
+    private JCVideoPlayer jcVideoPlayer;
     private List<Look_VideoEntiy.VideoBean.ChaptersBean> list = new ArrayList<>();
     private Intent intent;
     private String title;
@@ -51,10 +52,18 @@ public class Look_VideoActivity extends BaseActivity {
                 list.clear();
                 list.addAll(chapters);
 
-                String url = list.get(0).getUrl();
 
-//                jzVideoPlayerStandard.setUp(url, title);
-                jzVideoPlayerStandard.setUp(url,title,true);
+                String url = list.get(0).getUrl();
+                if (url != null){
+                    jcVideoPlayer.setUp(url,title,true);
+                    jcVideoPlayer.ivStart.setClickable(false);
+                    jcVideoPlayer.ivStart.performClick();
+
+
+                }else {
+                    Toast.makeText(Look_VideoActivity.this, "地址为空", Toast.LENGTH_SHORT).show();
+                }
+
 
 
             }
@@ -64,8 +73,26 @@ public class Look_VideoActivity extends BaseActivity {
 
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (jcVideoPlayer.isPressed()){
+            return;
+        }
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        jcVideoPlayer.destroyDrawingCache();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -76,7 +103,7 @@ public class Look_VideoActivity extends BaseActivity {
     @Override
     public void initView() {
 //        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        jzVideoPlayerStandard = (JCVideoPlayer) findViewById(R.id.videoplayer);
+        jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.videoplayer);
 
     }
 

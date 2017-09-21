@@ -91,7 +91,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/but_Cancel"
+        android:id="@+id/popu_cancel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

@@ -8,28 +8,19 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.jcodecraeer.xrecyclerview.ArrowRefreshHeader;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jiyun.ipandatv.App;
 import com.jiyun.ipandatv.R;
-import com.jiyun.ipandatv.adpater.Look_ListViewAdapter;
-import com.jiyun.ipandatv.adpater.Look_RefreshRecycler_Adapter;
 import com.jiyun.ipandatv.adpater.Look_XRecycler_Adapter;
 import com.jiyun.ipandatv.base.BaseFragment;
 import com.jiyun.ipandatv.model.callbacks.CallBacks;
@@ -37,23 +28,16 @@ import com.jiyun.ipandatv.model.entity.LookImgEntiy;
 import com.jiyun.ipandatv.model.entity.LookInfoEntiy;
 import com.jiyun.ipandatv.model.utils.OkHttpUtils;
 import com.jiyun.ipandatv.model.utils.Urls;
-import com.jiyun.ipandatv.presenter.HomePresenter;
 import com.jiyun.ipandatv.presenter.LookPresenterImg;
 import com.jiyun.ipandatv.presenter.LookPresenterInfo;
 import com.jiyun.ipandatv.presenter.LookPresenterImpInfo;
-import com.jiyun.ipandatv.ui.activity.GuideActivity;
 import com.jiyun.ipandatv.ui.activity.LookInfoActivity;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
-import com.lhh.ptrrv.library.PullToRefreshRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.list;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static com.jiyun.ipandatv.R.id.vp_ViewPager;
 
 
 /**
@@ -71,6 +55,8 @@ public class LookFragment extends BaseFragment implements LookPresenterImg.BaseV
     private int x = 0;
     public boolean netStatus = false;
     private LinearLayout linear;
+    // 标志位，标志已经初始化完成。
+    private boolean isPrepared ;
 
     @Override
     protected int getFragmentLayoutId() {
@@ -79,9 +65,11 @@ public class LookFragment extends BaseFragment implements LookPresenterImg.BaseV
 
     @Override
     protected void initFragmentView(View view) {
+        isPrepared = true;
         mListView_look = view.findViewById(R.id.mListView_look);
         linear = view.findViewById(R.id.linear);
 
+        initFragmentData();
         NetworkStatus(App.mActivity);
 
 
@@ -98,20 +86,31 @@ public class LookFragment extends BaseFragment implements LookPresenterImg.BaseV
             adapter = new Look_XRecycler_Adapter(listInfo, App.mActivity);
             mListView_look.setLayoutManager(new LinearLayoutManager(App.mActivity, LinearLayoutManager.VERTICAL, false));
             mListView_look.setAdapter(adapter);
+            Toast.makeText(context, "以连接到移动网络", Toast.LENGTH_SHORT).show();
         } else if (wifi) {
             //连接到WiFi
             netStatus = true;
             adapter = new Look_XRecycler_Adapter(listInfo, App.mActivity);
             mListView_look.setLayoutManager(new LinearLayoutManager(App.mActivity, LinearLayoutManager.VERTICAL, false));
             mListView_look.setAdapter(adapter);
+            Toast.makeText(context, "以连接到WiFi", Toast.LENGTH_SHORT).show();
         } else {
             //无网络
             linear.setBackground(getResources().getDrawable(R.drawable._no_net));
+            netStatus = true;
+            adapter = new Look_XRecycler_Adapter(listInfo, App.mActivity);
+            mListView_look.setLayoutManager(new LinearLayoutManager(App.mActivity, LinearLayoutManager.VERTICAL, false));
+            mListView_look.setAdapter(adapter);
+            Toast.makeText(context, "无网络", Toast.LENGTH_SHORT).show();
         }
     }
 
+
     @Override
     protected void initFragmentData() {
+        if (!isPrepared || isVisible){
+            return;
+        }
         LookPresenterImpInfo lookPresenterImp = new LookPresenterImpInfo(this);
         dialog = new ProgressDialog(getContext());
         lookPresenterImp.getHomeMessage();
@@ -142,6 +141,7 @@ public class LookFragment extends BaseFragment implements LookPresenterImg.BaseV
         mListView_look.setPullRefreshEnabled(true);
         mListView_look.setLoadingMoreEnabled(true);
         adapter.notifyDataSetChanged();
+
 
         initListener();
 
@@ -246,7 +246,7 @@ public class LookFragment extends BaseFragment implements LookPresenterImg.BaseV
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), LookInfoActivity.class);
-                    intent.putExtra("url", listHead.get(0).getUrl());
+                    intent.putExtra("id", listHead.get(0).getId());
                     startActivity(intent);
                 }
             });

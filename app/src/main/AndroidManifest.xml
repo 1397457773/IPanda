@@ -15,7 +15,6 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"></activity>
-        <activity android:name=".ui.activity.LookInfoActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
         <activity android:name=".ui.activity.AnimatorActivity">
             <intent-filter>
@@ -24,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.LookInfoActivity"/>
         <activity
             android:name=".ui.activity.Look_VideoActivity"
             android:screenOrientation="landscape"

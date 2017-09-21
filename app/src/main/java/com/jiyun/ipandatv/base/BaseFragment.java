@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 @SuppressLint("NewApi")
 public abstract class BaseFragment extends Fragment {
 
-    private boolean flag;
+    protected boolean isVisible;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -23,15 +23,30 @@ public abstract class BaseFragment extends Fragment {
         View view = inflater.inflate(getFragmentLayoutId(), container, false);
         initFragmentView(view);
         updateFragmentTitleBar();
+
         return view;
     }
 
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()){
+            isVisible = true;
+            onVisible();
+        }else {
+            isVisible= false;
+            onInvisible();
+
+        }
+    }
+
+    //不可见的处理
+    protected void onInvisible(){}
+
+    protected  void onVisible(){
         initFragmentData();
     }
+
 
     /**
      * 加载不同的Fragment的布局
