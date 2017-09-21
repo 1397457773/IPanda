@@ -19,7 +19,6 @@ import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
 import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
 import com.jiyun.ipandatv.ui.fragment.LiveFragment;
-import com.jiyun.ipandatv.ui.fragment.LookFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,7 +28,7 @@ import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
 import static com.jiyun.ipandatv.R.id.rbut_home;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity{
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
@@ -76,8 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initListener() {
-        ivHudong.setOnClickListener(this);
-        ivPerson.setOnClickListener(this);
+
     }
 
     @Override

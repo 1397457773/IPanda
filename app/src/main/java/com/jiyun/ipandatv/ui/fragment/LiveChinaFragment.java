@@ -126,11 +126,11 @@ public class LiveChinaFragment extends BaseFragment implements LiveChinaPresente
     }
 
     private void initPoPuView(final View popuView) {
-        myGridView_Buttom=popuView.findViewById(R.id.myGridView_Buttom);
-        tv_TiShi=popuView.findViewById(R.id.tv_TiShi);
-        myGridView_Top=popuView.findViewById(R.id.myGridView_Top);
-        btn_BianJi=popuView.findViewById(R.id.btn_BianJi);
-        tv_FanHui=popuView.findViewById(R.id.tv_FanHui);
+        myGridView_Buttom= (NoScrollGridView) popuView.findViewById(R.id.myGridView_Buttom);
+        tv_TiShi= (TextView) popuView.findViewById(R.id.tv_TiShi);
+        myGridView_Top= (MyGridView) popuView.findViewById(R.id.myGridView_Top);
+        btn_BianJi= (Button) popuView.findViewById(R.id.btn_BianJi);
+        tv_FanHui= (TextView) popuView.findViewById(R.id.tv_FanHui);
 
 
         adapterTop = new LiveChinaTopMyGridAdapter(listTitleTop,getContext());

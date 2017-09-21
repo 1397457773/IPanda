@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.jiyun.ipandatv.R;
-import com.jiyun.ipandatv.adpater.LiveAdapter;
+import com.jiyun.ipandatv.adpater.LiveAdapters;
 import com.jiyun.ipandatv.model.entity.Home_GuoBao_Video;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class GaoQingFragment extends Fragment {
 
     List<Home_GuoBao_Video> mList;
-    private LiveAdapter liveAdapter;
+    private LiveAdapters liveAdapter;
 
     public GaoQingFragment() {
     }
@@ -60,7 +60,7 @@ public class GaoQingFragment extends Fragment {
     }
 
     private void initAdapter() {
-        liveAdapter = new LiveAdapter(nList, getActivity());
+        liveAdapter = new LiveAdapters(nList, getActivity());
         lvView.setAdapter(liveAdapter);
         getActivity().runOnUiThread(new Runnable() {
             @Override
