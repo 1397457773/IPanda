@@ -17,6 +17,9 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveFragment;
+import com.jiyun.ipandatv.ui.fragment.LookFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,7 +57,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     RadioGroup rgFroup;
     @Bind(R.id.tv_title)
     TextView tvTitle;
-
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
 
@@ -66,6 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             isExit = false;
         }
     };
+
     @Override
     public void initData() {
 
@@ -84,7 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         ivPanda.setVisibility(View.VISIBLE);
         ivPerson.setVisibility(View.VISIBLE);
         FragmentBuilder.getInstance().start(R.id.mFramelayout, HomeFragment.class).buid();
-        rbutHome.setBackgroundColor(0xFFBABABA);
+        rbutHome.setBackgroundColor(0xFFD9D9D9);
 
     }
 
@@ -96,15 +99,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     //下面RadioButton的点击事件、切换Fragment视图
-    @OnClick({rbut_home, R.id.rbut_Look, R.id.rbut_Culture, rbut_Live, rbut_China,R.id.iv_panda, R.id.iv_hudong, R.id.iv_person})
+    @OnClick({R.id.rbut_home, R.id.rbut_Look, R.id.rbut_Culture, rbut_Live, rbut_China,R.id.iv_panda, R.id.iv_hudong, R.id.iv_person})
     public void onViewClicked(View view) {
-        rbutLook.setBackgroundColor(0xFFFFFFFF);
-        rbutCulture.setBackgroundColor(0xFFFFFFFF);
-        rbutLive.setBackgroundColor(0xFFFFFFFF);
-        rbutChina.setBackgroundColor(0xFFFFFFFF);
-
         switch (view.getId()) {
-            case rbut_home:
+            case R.id.rbut_home:
                 FragmentBuilder.getInstance().start(R.id.mFramelayout, HomeFragment.class).buid();
 
                 ivHudong.setVisibility(View.VISIBLE);
@@ -113,7 +111,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 tvTitle.setText("");
 
-                rbutHome.setBackgroundColor(0xFFBABABA);
+                rbutHome.setBackgroundColor(0xFFD9D9D9);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
 
                 break;
             case R.id.rbut_Look:
@@ -122,8 +124,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutLook.setBackgroundColor(0xFFBABABA);
+                rbutLook.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
 
                 break;
             case R.id.rbut_Culture:
@@ -133,28 +138,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutCulture.setBackgroundColor(0xFFBABABA);
+                rbutCulture.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
+
                 break;
             case R.id.rbut_Live:
 
                 tvTitle.setText("熊猫直播");
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutLive.setBackgroundColor(0xFFBABABA);
+                rbutLive.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
                 break;
             case R.id.rbut_China:
 
                 tvTitle.setText("直播中国");
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveChinaFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutChina.setBackgroundColor(0xFFBABABA);
+                rbutChina.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
                 break;
             case R.id.iv_panda:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
@@ -189,20 +204,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             System.exit(0);
         }
     }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_hudong:
-                Intent intent = new Intent(MainActivity.this,HuDongActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.iv_person:
-                break;
-        }
-    }
-
-
 
 }

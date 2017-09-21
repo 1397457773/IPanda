@@ -3,6 +3,9 @@
     package="com.jiyun.ipandatv">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -23,6 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.Main2Activity" android:screenOrientation="landscape"></activity>
+
         <activity android:name=".ui.activity.DownLoadActivity" />
         <activity android:name=".ui.activity.WebActivity" />
         <activity
@@ -47,4 +52,6 @@
         <activity android:name=".ui.activity.CCTVActivity"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 </manifest>

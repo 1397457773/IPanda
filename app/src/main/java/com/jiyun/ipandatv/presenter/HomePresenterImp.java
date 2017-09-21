@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 public class HomePresenterImp implements HomePresenter.BasePresenter {
+
     private HomePresenter.BaseView baseView;
     private final HomeModelData iModelImp;
 
@@ -38,15 +39,14 @@ public class HomePresenterImp implements HomePresenter.BasePresenter {
                 baseView.showDatas(homeEntiys);
                 baseView.dismissProgressDialog();
 
-
-
-
             }
-
             @Override
             public void failure(String result) {
-
+                baseView.error(result);
+                baseView.dismissProgressDialog();
             }
         });
+
+
     }
 }

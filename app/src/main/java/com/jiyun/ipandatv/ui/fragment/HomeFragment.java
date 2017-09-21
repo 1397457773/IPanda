@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
+import android.widget.ImageView;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -91,11 +93,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
 
     }
 
-
     @Override
     protected void initFragmentData() {
-
-
 
     }
 
@@ -144,32 +143,32 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(final int position) {
-               if (position==0){
-                   Intent intent = new Intent(getActivity(), DownLoadActivity.class);
-                   startActivity(intent);
+                if (position==0){
+                    Intent intent = new Intent(getActivity(), DownLoadActivity.class);
+                    startActivity(intent);
 
-               }else {
-                   OkHttpUtils.getInstance().sendGET(Urls.VIDEOPLAY + list.get(1).getBigImg().get(position).getPid(), new CallBacks() {
-                       @Override
-                       public void success(String result) {
-                           Gson gson = new Gson();
-                           HomeVideo homeVideo = gson.fromJson(result, HomeVideo.class);
-                           HomeVideo.VideoBean video = homeVideo.getVideo();
-                           List<HomeVideo.VideoBean.ChaptersBean> chapters = video.getChapters();
+                }else {
+                    OkHttpUtils.getInstance().sendGET(Urls.VIDEOPLAY + list.get(1).getBigImg().get(position).getPid(), new CallBacks() {
+                        @Override
+                        public void success(String result) {
+                            Gson gson = new Gson();
+                            HomeVideo homeVideo = gson.fromJson(result, HomeVideo.class);
+                            HomeVideo.VideoBean video = homeVideo.getVideo();
+                            List<HomeVideo.VideoBean.ChaptersBean> chapters = video.getChapters();
 
-                           Intent intent = new Intent(getActivity(), VideoActivity.class);
-                           intent.putExtra("url",chapters.get(0).getUrl());
-                           intent.putExtra("title",list.get(1).getBigImg().get(position ).getTitle());
-                           startActivity(intent);
-                       }
+                            Intent intent = new Intent(getActivity(), VideoActivity.class);
+                            intent.putExtra("url",chapters.get(0).getUrl());
+                            intent.putExtra("title",list.get(1).getBigImg().get(position ).getTitle());
+                            startActivity(intent);
+                        }
 
-                       @Override
-                       public void failure(String result) {
+                        @Override
+                        public void failure(String result) {
 
-                       }
-                   });
+                        }
+                    });
 
-               }
+                }
             }
         });
         banner.start();
@@ -178,8 +177,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.BaseView
             list.add(data);
         }
 
-         myRecyAdapter.notifyDataSetChanged();
-
+        myRecyAdapter.notifyDataSetChanged();
     }
 
     @Override
