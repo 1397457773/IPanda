@@ -143,7 +143,7 @@ public class CCTVActivity extends AppCompatActivity implements GaoQingFragment.M
             public void success(String result) {
                 Gson gson = new Gson();
                 video = gson.fromJson(result, Home_GuoBao_Video.class);
-                tvFirstTime.setText("首播时间:"+video.getVideoset().get_$0().getSbsj());
+                tvFirstTime.setText("首播 时间:"+video.getVideoset().get_$0().getSbsj());
                 mList = new ArrayList<Home_GuoBao_Video>();
                 mList.clear();
                 mList.add(video);
