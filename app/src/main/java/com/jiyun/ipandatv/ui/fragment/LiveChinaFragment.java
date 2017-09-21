@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +33,12 @@ import com.jiyun.ipandatv.model.entity.DaoBean;
 import com.jiyun.ipandatv.model.entity.DaoTopBean;
 import com.jiyun.ipandatv.model.entity.LiveChinaEntiy;
 import com.jiyun.ipandatv.model.entity.LiveChinaScene;
-import com.jiyun.ipandatv.presenter.HomePresenter;
-import com.jiyun.ipandatv.presenter.HomePresenterImp;
+import com.jiyun.ipandatv.presenter.LiveChinaPresenter;
+import com.jiyun.ipandatv.presenter.LiveChinaPresenterImp;
 import com.jiyun.ipandatv.view.MyGridView;
 import com.jiyun.ipandatv.view.NoScrollGridView;
+import com.jwenfeng.library.pulltorefresh.BaseRefreshListener;
+import com.jwenfeng.library.pulltorefresh.PullToRefreshLayout;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -46,6 +48,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -54,10 +57,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class LiveChinaFragment extends BaseFragment implements HomePresenter.BaseView<LiveChinaEntiy> {
+
+public class LiveChinaFragment extends BaseFragment implements LiveChinaPresenter.BaseView<LiveChinaEntiy> {
 
 
     @Bind(R.id.tb_LiveChina)
@@ -68,15 +69,16 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
     ListView lvLiveChina;
     @Bind(R.id.liear)
     LinearLayout liear;
+    @Bind(R.id.ptr_ShuaXin)
+    PullToRefreshLayout ptrShuaXin;
     private List<LiveChinaScene.LiveBean> listData;
     private ProgressDialog progressDialog;
-
 
 
     public static NoScrollGridView myGridView_Buttom;
     public static TextView tv_TiShi;
     public static MyGridView myGridView_Top;
-    public  static Button btn_BianJi;
+    public static Button btn_BianJi;
     private TextView tv_FanHui;
     private PopupWindow popupWindow;
     private List<LiveChinaEntiy.AlllistBean> alllist;
@@ -88,7 +90,12 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
     private LiveChinaMyGridAdapter adapter_bottom;
     private List<DaoTopBean> listTabTitle;
     private int i;
-
+    private int position;
+    private String url;
+    private LiveChinaScene listTab;
+    private String hls1;
+    private String liveurl;
+    private List<String> liveList = new ArrayList<String>();;
 
     public LiveChinaFragment() {
         // Required empty public constructor
@@ -97,10 +104,9 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     @Override
     protected int getFragmentLayoutId() {
+        progressDialog = new ProgressDialog(getActivity());
         return R.layout.fragment_live_china;
     }
-
-    @Override
     protected void initFragmentView(View view) {
         ButterKnife.bind(this, view);
         btnTianjia.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +125,8 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     @Override
     protected void initFragmentData() {
-        HomePresenterImp homePresenterImp = new HomePresenterImp(this);
-        homePresenterImp.getChinaMessage();
+        LiveChinaPresenterImp liveChinaPresenterImp = new LiveChinaPresenterImp(this);
+        liveChinaPresenterImp.getHomeMessage();
     }
 
     @Override
@@ -129,19 +135,19 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
     }
 
     private void initPoPuView(final View popuView) {
-        myGridView_Buttom=popuView.findViewById(R.id.myGridView_Buttom);
-        tv_TiShi=popuView.findViewById(R.id.tv_TiShi);
-        myGridView_Top=popuView.findViewById(R.id.myGridView_Top);
-        btn_BianJi=popuView.findViewById(R.id.btn_BianJi);
-        tv_FanHui=popuView.findViewById(R.id.tv_FanHui);
+        myGridView_Buttom = popuView.findViewById(R.id.myGridView_Buttom);
+        tv_TiShi = popuView.findViewById(R.id.tv_TiShi);
+        myGridView_Top = popuView.findViewById(R.id.myGridView_Top);
+        btn_BianJi = popuView.findViewById(R.id.btn_BianJi);
+        tv_FanHui = popuView.findViewById(R.id.tv_FanHui);
 
 
-        adapterTop = new LiveChinaTopMyGridAdapter(listTitleTop,getContext());
+
+        adapterTop = new LiveChinaTopMyGridAdapter(listTitleTop, getContext());
         myGridView_Top.setAdapter(adapterTop);
 
-        adapter_bottom = new LiveChinaMyGridAdapter(listTitleBottom,getContext());
+        adapter_bottom = new LiveChinaMyGridAdapter(listTitleBottom, getContext());
         myGridView_Buttom.setAdapter(adapter_bottom);
-
 
 
         tv_FanHui.setOnClickListener(new View.OnClickListener() {
@@ -153,82 +159,80 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
             }
         });
 
-        btn_BianJi.setOnClickListener(new View.OnClickListener() {
+
+        myGridView_Buttom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                i+=1;
-                switch (i%2){
-                    case 0:
-                        btn_BianJi.setText("编辑");
-
-                        break;
-                    case 1:
-                        btn_BianJi.setText("完成");
-                        Toast.makeText(getActivity(), "编辑.......", Toast.LENGTH_SHORT).show();
-                        myGridView_Top.setOnChangeListener(new MyGridView.OnChanageListener() {
-                            @Override
-                            public void onChange(int form, int to) {
-                                DaoTopBean daoTopBean = listTitleTop.get(form);
-                                if(form < to){
-                                    for(int i=form; i<to; i++){
-                                        Collections.swap(listTitleTop, i, i+1);
-                                    }
-                                }else if(form > to){
-                                    for(int i=form; i>to; i--){
-                                        Collections.swap(listTitleTop, i, i-1);
-                                    }
-                                }
-
-                                listTitleTop.set(to, daoTopBean);
-
-                                adapterTop.notifyDataSetChanged();
-                            }
-                        });
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DaoBean daoBean = listTitleBottom.get(position);
+                listTitleTop.add(new DaoTopBean(daoBean.getId(), daoBean.getOrder(), daoBean.getTitle(), daoBean.getType(), daoBean.getUrl()));
+                daoTop.insert(new DaoTopBean(daoBean.getId(), daoBean.getOrder(), daoBean.getTitle(), daoBean.getType(), daoBean.getUrl()));
+                adapterTop.notifyDataSetChanged();
 
 
+                dao.delete(listTitleBottom.get(position));
+                listTitleBottom.remove(position);
 
-                        myGridView_Buttom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                DaoBean daoBean = listTitleBottom.get(position);
-                                listTitleTop.add(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
-                                daoTop.insert(new DaoTopBean(daoBean.getId(),daoBean.getOrder(),daoBean.getTitle(),daoBean.getType(),daoBean.getUrl()));
-                                adapterTop.notifyDataSetChanged();
+                adapter_bottom.notifyDataSetChanged();
 
-
-                                dao.delete(listTitleBottom.get(position));
-                                listTitleBottom.remove(position);
-
-                                adapter_bottom.notifyDataSetChanged();
-
-                            }
-                        });
-                        myGridView_Top.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                DaoTopBean daoTopBean = listTitleTop.get(position);
-                                if (adapterTop.getCount()>4){
-                                    listTitleBottom.add(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
-                                    dao.insert(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
-                                    adapterTop.notifyDataSetChanged();
+            }
+        });
+        myGridView_Top.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DaoTopBean daoTopBean = listTitleTop.get(position);
+                if (adapterTop.getCount() > 4) {
+                    listTitleBottom.add(new DaoBean(daoTopBean.getId(), daoTopBean.getOrder(), daoTopBean.getTitle(), daoTopBean.getType(), daoTopBean.getUrl()));
+                    dao.insert(new DaoBean(daoTopBean.getId(), daoTopBean.getOrder(), daoTopBean.getTitle(), daoTopBean.getType(), daoTopBean.getUrl()));
+                    adapterTop.notifyDataSetChanged();
 
 
-                                    daoTop.delete(listTitleTop.get(position));
-                                    listTitleTop.remove(position);
-                                    adapterTop.notifyDataSetChanged();
-                                }else {
-                                    Toast.makeText(getActivity(), "最少为4个标题栏", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-                        });
-
-                        break;
+                    daoTop.delete(listTitleTop.get(position));
+                    listTitleTop.remove(position);
+                    adapterTop.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getActivity(), "最少为4个标题栏", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        myGridView_Top.setOnChangeListener(new MyGridView.OnChanageListener() {
+            @Override
+            public void onChange(int form, int to) {
+                DaoTopBean daoTopBean = listTitleTop.get(form);
+                Collections.swap(listTitleTop, form,  to);
+                listTitleTop.set(to, daoTopBean);
+                adapterTop.notifyDataSetInvalidated();
 
+                DaoTopBean tuoZhuaiTopBean = listTitleTop.get(to);
+                DaoTopBean kaiShiTopBean = listTitleTop.get(form);
+
+
+                daoTop.update(new DaoTopBean((long) form,kaiShiTopBean.getOrder(),kaiShiTopBean.getTitle(),kaiShiTopBean.getType(),kaiShiTopBean.getUrl()));
+                daoTop.update(new DaoTopBean((long) to,tuoZhuaiTopBean.getOrder(),tuoZhuaiTopBean.getTitle(),tuoZhuaiTopBean.getType(),tuoZhuaiTopBean.getUrl()));
+            }
+        });
+        myGridView_Buttom.setEnabled(false);
+        myGridView_Top.setEnabled(false);
+        btn_BianJi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i += 1;
+                switch (i % 2) {
+                    case 0:
+                        tv_TiShi.setVisibility(View.GONE);
+                        btn_BianJi.setText("编辑");
+                        myGridView_Buttom.setEnabled(false);
+                        myGridView_Top.setEnabled(false);
+                        break;
+                    case 1:
+                        tv_TiShi.setVisibility(View.VISIBLE);
+                        btn_BianJi.setText("完成");
+                        myGridView_Top.setEnabled(true);
+                        myGridView_Buttom.setEnabled(true);
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -239,40 +243,14 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
     @Override
     public void showProgressDialog() {
-//        progressDialog.show();
+        progressDialog.show();
     }
 
     @Override
     public void dismissProgressDialog() {
-//        progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
-    @Override
-    public void showDatas(List<LiveChinaEntiy> mBean) {
-        alllist = mBean.get(0).getAlllist();
-        dao = GreenDaoUtils.getInstance(getContext()).getDao();
-
-        for (int i = 0; i < alllist.size(); i++) {
-            dao.insertOrReplace(new DaoBean((long) i,alllist.get(i).getOrder(),alllist.get(i).getTitle(),alllist.get(i).getType() ,alllist.get(i).getUrl()));
-        }
-
-
-        final List<LiveChinaEntiy.TablistBean> tablist = mBean.get(0).getTablist();
-        daoTop = DaoTopUtils.getInstance(getContext()).getDao();
-        for (int i = 0; i < tablist.size(); i++) {
-            daoTop.insertOrReplace(new DaoTopBean((long) i,tablist.get(i).getOrder(),tablist.get(i).getTitle(),tablist.get(i).getType(),tablist.get(i).getUrl()));
-        }
-
-        List<DaoTopBean> listTop = daoTop.queryBuilder().list();
-        for (int i = 0; i <listTop.size() ; i++) {
-            DaoTopBean daoTopBean = listTop.get(i);
-            dao.queryBuilder().where(DaoBeanDao.Properties.Title.eq(daoTopBean.getTitle())).buildDelete().executeDeleteWithoutDetachingEntities();
-        }
-        initTabData();
-
-        initGridData();
-
-    }
 
     private void initTabData() {
         final List<DaoTopBean> listDao = daoTop.queryBuilder().list();
@@ -286,150 +264,19 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
         final String url = listDao.get(0).getUrl();
         parJson(url);
         lvLiveChina.setVisibility(View.VISIBLE);
+        initListData();
+    }
+
+    private void initListData() {
         tbLiveChina.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                switch (position) {
-                    case 0:
-                        String url0 = listTabTitle.get(0).getUrl();
-                        parJson(url0);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 1:
-                        String url1 = listTabTitle.get(1).getUrl();
-                        parJson(url1);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 2:
-                        String url2 = listTabTitle.get(2).getUrl();
-                        parJson(url2);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 3:
-                        String url3 = listTabTitle.get(3).getUrl();
-                        parJson(url3);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 4:
-                        String url4 = listTabTitle.get(4).getUrl();
-                        parJson(url4);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 5:
-                        String url5 = listTabTitle.get(5).getUrl();
-                        parJson(url5);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 6:
-                        String url6 = listTabTitle.get(6).getUrl();
-                        parJson(url6);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 7:
-                        String url7 = listTabTitle.get(7).getUrl();
-                        parJson(url7);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 8:
-                        String url8 = listTabTitle.get(8).getUrl();
-                        parJson(url8);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 9:
-                        String url9 = listTabTitle.get(9).getUrl();
-                        parJson(url9);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 10:
-                        String url10 = listTabTitle.get(10).getUrl();
-                        parJson(url10);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 11:
-                        String url11 = listTabTitle.get(11).getUrl();
-                        parJson(url11);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 12:
-                        String url12 = listTabTitle.get(12).getUrl();
-                        parJson(url12);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 13:
-                        String url13 = listTabTitle.get(13).getUrl();
-                        parJson(url13);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 14:
-                        String url14 = listTabTitle.get(14).getUrl();
-                        parJson(url14);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 15:
-                        String url15 = listTabTitle.get(15).getUrl();
-                        parJson(url15);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 16:
-                        String url16 = listTabTitle.get(16).getUrl();
-                        parJson(url16);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 17:
-                        String url17 = listTabTitle.get(17).getUrl();
-                        parJson(url17);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 18:
-                        String url18 = listTabTitle.get(18).getUrl();
-                        parJson(url18);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 19:
-                        String url19 = listTabTitle.get(19).getUrl();
-                        parJson(url19);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 20:
-                        String url20 = listTabTitle.get(20).getUrl();
-                        parJson(url20);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 21:
-                        String url21 = listTabTitle.get(21).getUrl();
-                        parJson(url21);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 22:
-                        String url22 = listTabTitle.get(22).getUrl();
-                        parJson(url22);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 23:
-                        String url23 = listTabTitle.get(23).getUrl();
-                        parJson(url23);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 24:
-                        String url24 = listTabTitle.get(24).getUrl();
-                        parJson(url24);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 25:
-                        String url25 = listTabTitle.get(25).getUrl();
-                        parJson(url25);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-                    case 26:
-                        String url26 = listTabTitle.get(26).getUrl();
-                        parJson(url26);
-                        lvLiveChina.setVisibility(View.VISIBLE);
-                        break;
-
-
-
-                }
+                lvLiveChina.setVisibility(View.GONE);
+                position = tab.getPosition();
+                url = listTabTitle.get(position).getUrl();
+                parJson(url);
+                lvLiveChina.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -454,15 +301,13 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
 
         for (int i = 0; i < listDao.size(); i++) {
             DaoTopBean daoTopBean = listDao.get(i);
-            dao.delete(new DaoBean(daoTopBean.getId(),daoTopBean.getOrder(),daoTopBean.getTitle(),daoTopBean.getType(),daoTopBean.getUrl()));
+            dao.delete(new DaoBean(daoTopBean.getId(), daoTopBean.getOrder(), daoTopBean.getTitle(), daoTopBean.getType(), daoTopBean.getUrl()));
         }
 
         List<DaoBean> list = dao.queryBuilder().list();
         listTitleBottom = new ArrayList<>();
         listTitleBottom.clear();
         listTitleBottom.addAll(list);
-
-
 
 
     }
@@ -496,7 +341,7 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
                 Gson gson = new Gson();
                 Type type = new TypeToken<LiveChinaScene>() {
                 }.getType();
-                LiveChinaScene listTab = gson.fromJson(string, type);
+                listTab = gson.fromJson(string, type);
                 listData = new ArrayList<>();
                 listData.addAll(listTab.getLive());
                 getActivity().runOnUiThread(new Runnable() {
@@ -506,13 +351,55 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
                     }
                 });
             }
+
         });
     }
 
     private void initListAdapter() {
-        LiveChinaListAdapter adapter = new LiveChinaListAdapter(listData, getActivity());
+        Log.e("TAG","listSize___________"+liveList.size());
+        LiveChinaListAdapter adapter = new LiveChinaListAdapter(listData, getActivity(), liveList);
         lvLiveChina.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showDatas(List<LiveChinaEntiy> mBean) {
+        alllist = mBean.get(0).getAlllist();
+        dao = GreenDaoUtils.getInstance(getContext()).getDao();
+
+        for (int i = 0; i < alllist.size(); i++) {
+            dao.insertOrReplace(new DaoBean((long) i, alllist.get(i).getOrder(), alllist.get(i).getTitle(), alllist.get(i).getType(), alllist.get(i).getUrl()));
+        }
+
+
+        final List<LiveChinaEntiy.TablistBean> tablist = mBean.get(0).getTablist();
+        daoTop = DaoTopUtils.getInstance(getContext()).getDao();
+        for (int i = 0; i < tablist.size(); i++) {
+            daoTop.insertOrReplace(new DaoTopBean((long) i, tablist.get(i).getOrder(), tablist.get(i).getTitle(), tablist.get(i).getType(), tablist.get(i).getUrl()));
+        }
+
+        List<DaoTopBean> listTop = daoTop.queryBuilder().list();
+        for (int i = 0; i < listTop.size(); i++) {
+            DaoTopBean daoTopBean = listTop.get(i);
+            dao.queryBuilder().where(DaoBeanDao.Properties.Title.eq(daoTopBean.getTitle())).buildDelete().executeDeleteWithoutDetachingEntities();
+        }
+        initTabData();
+        initGridData();
+        ptrShuaXin.setCanLoadMore(false);
+        ptrShuaXin.setRefreshListener(new BaseRefreshListener() {
+            @Override
+            public void refresh() {
+                listData.clear();
+                url = listTabTitle.get(position).getUrl();
+                parJson(url);
+                ptrShuaXin.finishRefresh();
+            }
+
+            @Override
+            public void loadMore() {
+
+            }
+        });
     }
 
     @Override
@@ -523,6 +410,12 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
                 Toast.makeText(getActivity(), "服务器开小差了", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -538,4 +431,5 @@ public class LiveChinaFragment extends BaseFragment implements HomePresenter.Bas
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
 }

@@ -6,7 +6,8 @@
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
         android:id="@+id/videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="250dp">
+    </fm.jiecao.jcvideoplayer_lib.JCVideoPlayer>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,10 +38,10 @@
             android:background="#E5E5E5"/>
     </LinearLayout>
     <TextView
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_content"
+        android:layout_margin="20dp"
         android:textSize="20dp"
         android:textColor="#000000"
         android:visibility="gone"/>
