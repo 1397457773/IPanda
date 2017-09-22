@@ -10,7 +10,9 @@
         android:id="@+id/mToolbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:layout_marginBottom="5dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,13 +71,14 @@
         android:layout_alignParentBottom="true">
 
         <RadioGroup
+
             android:id="@+id/rg_froup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
-
+                android:paddingTop="5dp"
                 android:id="@+id/rbut_home"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -88,6 +91,7 @@
                 android:textSize="13sp" />
 
             <RadioButton
+                android:paddingTop="5dp"
                 android:id="@+id/rbut_Look"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -100,6 +104,7 @@
                 android:textSize="13sp" />
 
             <RadioButton
+                android:paddingTop="5dp"
                 android:id="@+id/rbut_Culture"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -113,6 +118,7 @@
                 android:textSize="13sp" />
 
             <RadioButton
+                android:paddingTop="5dp"
                 android:id="@+id/rbut_Live"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -125,6 +131,7 @@
                 android:textSize="13sp" />
 
             <RadioButton
+                android:paddingTop="5dp"
                 android:id="@+id/rbut_China"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

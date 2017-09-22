@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jiyun.ipandatv.ui.activity.HuDongWebActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/too_bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimary"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/iv_img"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_chevron_left_white_36dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26dp"
+                android:textColor="#FFF"
+                android:layout_centerInParent="true"
+                />
+            <ImageView
+
+                android:id="@+id/iv_img_share"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/share"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <WebView
+        android:id="@+id/web_View"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/too_bar"
+        ></WebView>
+</RelativeLayout>

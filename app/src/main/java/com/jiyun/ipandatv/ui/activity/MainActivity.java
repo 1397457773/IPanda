@@ -1,5 +1,6 @@
 package com.jiyun.ipandatv.ui.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
 import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,12 +26,13 @@ import butterknife.OnClick;
 
 import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
+import static com.jiyun.ipandatv.R.id.rbut_home;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
-    @Bind(R.id.rbut_home)
+    @Bind(rbut_home)
     RadioButton rbutHome;
     @Bind(R.id.rbut_Look)
     RadioButton rbutLook;
@@ -114,7 +117,6 @@ public class MainActivity extends BaseActivity {
 
                 break;
             case R.id.rbut_Look:
-
                 tvTitle.setText("熊猫观察");
 
                 ivHudong.setVisibility(View.GONE);
@@ -144,6 +146,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rbut_Live:
 
                 tvTitle.setText("熊猫直播");
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
@@ -170,7 +173,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_hudong:
-                Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,HuDongActivity.class));
                 break;
             case R.id.iv_person:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();

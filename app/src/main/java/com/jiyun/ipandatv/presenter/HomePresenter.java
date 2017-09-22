@@ -12,6 +12,8 @@ public interface HomePresenter {
     public interface BaseView <T> extends IView{
         void showDatas(List<T> mBean);
         void error(String string);
+
+
     }
 
     public interface BasePresenter extends IPresenter{
