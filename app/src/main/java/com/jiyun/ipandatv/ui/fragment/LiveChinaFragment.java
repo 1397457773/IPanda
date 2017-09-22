@@ -93,8 +93,6 @@ public class LiveChinaFragment extends BaseFragment implements LiveChinaPresente
     private int position;
     private String url;
     private LiveChinaScene listTab;
-    private String hls1;
-    private String liveurl;
     private List<String> liveList = new ArrayList<String>();;
 
     public LiveChinaFragment() {
@@ -407,7 +405,7 @@ public class LiveChinaFragment extends BaseFragment implements LiveChinaPresente
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getActivity(), "服务器开小差了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络超时", Toast.LENGTH_SHORT).show();
             }
         });
     }
