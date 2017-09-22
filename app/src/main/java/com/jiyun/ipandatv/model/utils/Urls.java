@@ -136,4 +136,7 @@ public class Urls {
     public static final String Z2="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=2&serviceId=panda&em=2";
     public static final String Z3="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=3&serviceId=panda&em=2";
     public static final String Z4="http://api.cntv.cn/video/videolistById?n=6&vsid=C10471&p=4&serviceId=panda&em=2";
+
+    public static final String liveurl="http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hd";
+    public static final String ll="&amp;client=androidapp";
 }

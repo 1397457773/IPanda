@@ -1,6 +1,7 @@
 package com.jiyun.ipandatv.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jiyun.ipandatv.R;
+import com.jiyun.ipandatv.model.callbacks.CallBacks;
+import com.jiyun.ipandatv.model.entity.FirstChinaLive;
 import com.jiyun.ipandatv.model.entity.HomeEntiy;
+import com.jiyun.ipandatv.model.utils.OkHttpUtils;
+import com.jiyun.ipandatv.model.utils.Urls;
+import com.jiyun.ipandatv.ui.activity.ChinaLive_start;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,9 +42,30 @@ public class ThirdAdapter2 extends RecyclerView.Adapter<ThirdAdapter2.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Picasso.with(context.getApplicationContext()).load(chinaliveList.get(position).getChinalive().getList().get(position).getImage()).into(holder.iv_img_live);
         holder.tv_content.setText(chinaliveList.get(position).getChinalive().getList().get(position).getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OkHttpUtils.getInstance().sendGET(Urls.liveurl + chinaliveList.get(0).getChinalive().getList().get(position).getId() + Urls.ll, new CallBacks() {
+                    @Override
+                    public void success(String result) {
+                        Gson gson = new Gson();
+                        FirstChinaLive firstChinaLive = gson.fromJson(result, FirstChinaLive.class);
+                        String hls1 = firstChinaLive.getHls_url().getHls1();
+                        Intent intent = new Intent(context, ChinaLive_start.class);
+                        intent.putExtra("url",hls1);
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void failure(String result) {
+
+                    }
+                });
+            }
+        });
     }
 
     @Override

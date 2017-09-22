@@ -60,11 +60,12 @@ public class GaoQingFragment extends Fragment {
     }
 
     private void initAdapter() {
-        liveAdapter = new LiveAdapters(nList, getActivity());
-        lvView.setAdapter(liveAdapter);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                liveAdapter = new LiveAdapters(nList, getActivity());
+                lvView.setAdapter(liveAdapter);
                 liveAdapter.notifyDataSetChanged();
             }
         });

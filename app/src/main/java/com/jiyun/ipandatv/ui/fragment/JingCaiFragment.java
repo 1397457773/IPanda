@@ -59,11 +59,11 @@ public class JingCaiFragment extends Fragment {
     }
 
     private void initAdapter() {
-        list_guoBao_jingCai_adapter = new List_GuoBao_jingCai_Adapter(cList, getActivity());
-        lvView.setAdapter(list_guoBao_jingCai_adapter);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                list_guoBao_jingCai_adapter = new List_GuoBao_jingCai_Adapter(cList, getActivity());
+                lvView.setAdapter(list_guoBao_jingCai_adapter);
                 list_guoBao_jingCai_adapter.notifyDataSetChanged();
             }
         });
