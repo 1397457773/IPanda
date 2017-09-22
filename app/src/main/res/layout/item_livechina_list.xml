@@ -6,7 +6,7 @@
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
         android:id="@+id/videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="230dp">
     </fm.jiecao.jcvideoplayer_lib.JCVideoPlayer>
     <LinearLayout
         android:layout_width="match_parent"

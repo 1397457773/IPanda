@@ -57,6 +57,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.view.View.GONE;
+
 
 public class LiveChinaFragment extends BaseFragment implements LiveChinaPresenter.BaseView<LiveChinaEntiy> {
 
@@ -217,7 +219,7 @@ public class LiveChinaFragment extends BaseFragment implements LiveChinaPresente
                 i += 1;
                 switch (i % 2) {
                     case 0:
-                        tv_TiShi.setVisibility(View.GONE);
+                        tv_TiShi.setVisibility(GONE);
                         btn_BianJi.setText("编辑");
                         myGridView_Buttom.setEnabled(false);
                         myGridView_Top.setEnabled(false);
@@ -270,10 +272,12 @@ public class LiveChinaFragment extends BaseFragment implements LiveChinaPresente
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                lvLiveChina.setVisibility(View.GONE);
+                lvLiveChina.setVisibility(GONE);
+                progressDialog.show();
                 position = tab.getPosition();
                 url = listTabTitle.get(position).getUrl();
                 parJson(url);
+                progressDialog.dismiss();
                 lvLiveChina.setVisibility(View.VISIBLE);
             }
 
