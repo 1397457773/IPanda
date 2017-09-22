@@ -1,18 +1,20 @@
 package com.jiyun.ipandatv.ui.activity;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.jiyun.ipandatv.App;
-import com.jiyun.ipandatv.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -25,7 +27,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         App.mBaseActivity = this;
 
         setContentView(getLayout());
-
         initView();
         initListener();
         initData();
@@ -58,5 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         //你的代码
         super.onConfigurationChanged(newConfig);
     }
+
 
 }

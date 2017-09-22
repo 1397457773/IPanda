@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:padding="8dp"
+        android:id="@+id/tv_panda_live"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0256ff"
+        android:textSize="16dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_panda_live"
+        android:background="#e2e2e2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="1dp"
+        android:id="@+id/rcy_cler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_panda_live"></android.support.v7.widget.RecyclerView>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rcy_cler"
+        android:background="#e2e2e2" />
+    <TextView
+
+        android:padding="5dp"
+        android:id="@+id/tv_panda_live1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcy_cler"
+        android:layout_marginTop="10dp"
+        android:textColor="#0256ff"
+        android:textSize="16dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_panda_live1"
+        android:background="#e2e2e2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy_cler1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_panda_live1"
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rcy_cler1"
+        android:background="#e2e2e2" />
+    <TextView
+        android:padding="5dp"
+        android:id="@+id/tv_panda_live2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rcy_cler1"
+        android:layout_marginTop="10dp"
+        android:textColor="#0256ff"
+        android:textSize="16dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_panda_live2"
+        android:background="#e2e2e2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy_cler2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_panda_live2"
+        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+</RelativeLayout>

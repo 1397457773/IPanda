@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_BiaoQian_Top"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:layout_height="25dp"
+        android:background="#ffffff"
+        android:text="侯宇航"
+        android:focusable="false"
+        android:textColor="#000000"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:id="@+id/iv_shanchu"
+        />
+
+
+</LinearLayout>

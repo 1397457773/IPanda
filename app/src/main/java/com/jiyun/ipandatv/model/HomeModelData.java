@@ -1,7 +1,5 @@
 package com.jiyun.ipandatv.model;
 
-import android.content.Context;
-
 import com.jiyun.ipandatv.model.callbacks.CallBacks;
 import com.jiyun.ipandatv.model.utils.OkHttpUtils;
 

@@ -1,7 +1,6 @@
 package com.jiyun.ipandatv.ui.activity;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
@@ -18,7 +17,8 @@ import android.widget.Toast;
 import com.jiyun.ipandatv.R;
 import com.jiyun.ipandatv.base.FragmentBuilder;
 import com.jiyun.ipandatv.ui.fragment.HomeFragment;
-import com.jiyun.ipandatv.ui.fragment.LookFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveChinaFragment;
+import com.jiyun.ipandatv.ui.fragment.LiveFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,9 +27,8 @@ import butterknife.OnClick;
 import static com.jiyun.ipandatv.R.id.rbut_China;
 import static com.jiyun.ipandatv.R.id.rbut_Live;
 import static com.jiyun.ipandatv.R.id.rbut_home;
-import static com.jiyun.ipandatv.R.id.rg_froup;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
 
     @Bind(R.id.mFramelayout)
     FrameLayout mFramelayout;
@@ -86,7 +85,7 @@ public class MainActivity extends BaseActivity {
         ivPanda.setVisibility(View.VISIBLE);
         ivPerson.setVisibility(View.VISIBLE);
         FragmentBuilder.getInstance().start(R.id.mFramelayout, HomeFragment.class).buid();
-        rbutHome.setBackgroundColor(0xFFBABABA);
+        rbutHome.setBackgroundColor(0xFFD9D9D9);
 
     }
 
@@ -98,15 +97,10 @@ public class MainActivity extends BaseActivity {
     }
 
     //下面RadioButton的点击事件、切换Fragment视图
-    @OnClick({rbut_home, R.id.rbut_Look, R.id.rbut_Culture, rbut_Live, rbut_China,R.id.iv_panda, R.id.iv_hudong, R.id.iv_person})
+    @OnClick({R.id.rbut_home, R.id.rbut_Look, R.id.rbut_Culture, rbut_Live, rbut_China,R.id.iv_panda, R.id.iv_hudong, R.id.iv_person})
     public void onViewClicked(View view) {
-        rbutLook.setBackgroundColor(0xFFFFFFFF);
-        rbutCulture.setBackgroundColor(0xFFFFFFFF);
-        rbutLive.setBackgroundColor(0xFFFFFFFF);
-        rbutChina.setBackgroundColor(0xFFFFFFFF);
-
         switch (view.getId()) {
-            case rbut_home:
+            case R.id.rbut_home:
                 FragmentBuilder.getInstance().start(R.id.mFramelayout, HomeFragment.class).buid();
 
                 ivHudong.setVisibility(View.VISIBLE);
@@ -115,18 +109,24 @@ public class MainActivity extends BaseActivity {
 
                 tvTitle.setText("");
 
-                rbutHome.setBackgroundColor(0xFFBABABA);
+                rbutHome.setBackgroundColor(0xFFD9D9D9);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
 
                 break;
             case R.id.rbut_Look:
-                FragmentBuilder.getInstance().start(R.id.mFramelayout, LookFragment.class).buid();
                 tvTitle.setText("熊猫观察");
 
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutLook.setBackgroundColor(0xFFBABABA);
+                rbutLook.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
 
                 break;
             case R.id.rbut_Culture:
@@ -136,41 +136,50 @@ public class MainActivity extends BaseActivity {
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutCulture.setBackgroundColor(0xFFBABABA);
+                rbutCulture.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
+
                 break;
             case R.id.rbut_Live:
 
                 tvTitle.setText("熊猫直播");
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutLive.setBackgroundColor(0xFFBABABA);
+                rbutLive.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutChina.setBackgroundColor(0xFFFFFFFF);
                 break;
             case R.id.rbut_China:
 
                 tvTitle.setText("直播中国");
-
+                FragmentBuilder.getInstance().start(R.id.mFramelayout, LiveChinaFragment.class).buid();
                 ivHudong.setVisibility(View.GONE);
                 ivPanda.setVisibility(View.GONE);
 
-                rbutChina.setBackgroundColor(0xFFBABABA);
+                rbutChina.setBackgroundColor(0xFFD9D9D9);
                 rbutHome.setBackgroundColor(0xFFFFFFFF);
+                rbutLook.setBackgroundColor(0xFFFFFFFF);
+                rbutCulture.setBackgroundColor(0xFFFFFFFF);
+                rbutLive.setBackgroundColor(0xFFFFFFFF);
                 break;
             case R.id.iv_panda:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_hudong:
-                Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this,HuDongActivity.class));
                 break;
             case R.id.iv_person:
                 Toast.makeText(this, ".", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
-
     //对返回键进行监听
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

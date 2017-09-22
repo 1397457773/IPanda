@@ -3,7 +3,12 @@
     package="com.jiyun.ipandatv">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".App"
@@ -25,9 +30,41 @@
         </activity>
         <activity android:name=".ui.activity.LookInfoActivity"/>
         <activity
-            android:name=".ui.activity.Look_VideoActivity"
-            android:screenOrientation="landscape"
+            android:name=".ui.activity.Main2Activity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.activity.DownLoadActivity" />
+        <activity android:name=".ui.activity.WebActivity" />
+        <activity
+            android:name=".ui.activity.VideoActivity"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.activity.HorizActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.activity.TextActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.activity.ForthWebActivity" />
+        <activity android:name=".ui.activity.HuDongActivity" />
+        <activity android:name=".ui.activity.HuDongWebActivity" />
+        <activity
+            android:name=".ui.activity.SixVideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.activity.CCTVActivity" />
+        <activity
+            android:name=".ui.activity.PandaLive_start"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.activity.WallLive_start"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
+            />
+        <activity android:name=".ui.activity.ChinaLive_start"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape"
             ></activity>
     </application>
 
