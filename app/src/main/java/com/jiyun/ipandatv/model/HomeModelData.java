@@ -12,6 +12,8 @@ public class HomeModelData {
 
     public void getHomeOhhttp(String url, CallBacks callBacks){
         OkHttpUtils.getInstance().sendGET(url,callBacks);
+
+
     }
 
 }
